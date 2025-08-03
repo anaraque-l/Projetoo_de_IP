@@ -48,13 +48,13 @@ OFFSET_Y = (ALTURA_TELA - ALTURA_LABIRINTO) // 2
 
 
 IMAGENS = {}
-IMAGENS['ladrao'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'ladrao.png')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
-IMAGENS['policia'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'policia.png')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
-IMAGENS['acelera_ladrao'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'acelera_ladrao.png')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
-IMAGENS['desacelera_ladrao'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'desacelera_ladrao.png')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
-IMAGENS['acelera_policia'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'acelera_policia.png')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
-IMAGENS['desacelera_policia'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'desacelera_policia.png')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
-IMAGENS['coletável']=pygame.transform.scale(pygame.image.load(os.path.join('.', 'arma.png')).convert_alpha(),(TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['ladrao'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'ladrao.webp')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['policia'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'policia.webp')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['acelera_ladrao'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'acelera_ladrao.webp')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['desacelera_ladrao'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'desacelera_ladrao.webp')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['acelera_policia'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'acelera_policia.webp')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['desacelera_policia'] = pygame.transform.scale(pygame.image.load(os.path.join('.', 'desacelera_policia.webp')).convert_alpha(), (TAMANHO_CELULA, TAMANHO_CELULA))
+IMAGENS['coletável']=pygame.transform.scale(pygame.image.load(os.path.join('.', 'arma.webp')).convert_alpha(),(TAMANHO_CELULA, TAMANHO_CELULA))
 
 #Velocidades e durações
 VELOCIDADE_MS_PADRAO = 100
