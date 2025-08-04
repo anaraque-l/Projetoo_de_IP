@@ -145,7 +145,7 @@ class Jogo:
         # --- ADICIONADO: Configurações do timer ---
         self.tempo_limite = 120000  # 2 minutos em milissegundos
         self.tempo_inicio = pygame.time.get_ticks()
-        # -----------------------------------------
+       
 
     def encontrar_posicao_aleatoria(self):
         vazios = []
@@ -216,7 +216,7 @@ class Jogo:
         contador=fonte.render(f'Armas: {self.ladrao.contagemcoletaveis}/5', True, PRETO)
         TELA.blit(contador,(10,10))
 
-    # --- ADICIONADO: Função para desenhar o timer na tela ---
+    # timer na tela 
     def desenhar_timer(self, agora):
         tempo_restante_ms = self.tempo_limite - (agora - self.tempo_inicio)
         if tempo_restante_ms < 0:
@@ -231,9 +231,8 @@ class Jogo:
         superficie_texto = fonte.render(texto_timer, True, PRETO)
         pos_x = LARGURA_TELA - superficie_texto.get_width() - 10
         TELA.blit(superficie_texto, (pos_x, 10))
-    # --------------------------------------------------------
 
-    # --- MÉTODO MODIFICADO: Novas condições de vitória ---
+
     def verificar_fim_de_jogo(self, agora):
         fonte = pygame.font.Font(None, 74)
 
@@ -259,7 +258,7 @@ class Jogo:
         if not self.rodando:
             pygame.display.flip()
             pygame.time.wait(3000)
-    # ----------------------------------------------------
+
 
     def loop_principal(self):
         while self.rodando:
@@ -268,7 +267,7 @@ class Jogo:
                 if evento.type == pygame.QUIT:
                     self.rodando = False
 
-            # Apenas continua a lógica do jogo se self.rodando for True
+            #Apenas continua a lógica do jogo se self.rodando for True
             if self.rodando:
                 if agora >= self.tempo_proximo_objeto:
                     self.criar_objeto()
@@ -291,21 +290,16 @@ class Jogo:
                 self.ladrao.desenhar(TELA)
                 self.policia.desenhar(TELA)
                 self.contadornatela()
-                
-                # --- ADICIONADO: Chamada para desenhar o timer ---
+           
                 self.desenhar_timer(agora)
-                # -------------------------------------------------
-                
-                # --- MODIFICADO: Passando 'agora' para a função ---
+    
                 self.verificar_fim_de_jogo(agora)
-                # --------------------------------------------------
                 
                 pygame.display.flip()
                 self.clock.tick(self.fps)
 
         pygame.quit()
 
-# --- Inicia o Jogo ---
-if __name__ == '__main__':
-    jogo = Jogo()
-    jogo.loop_principal()
+
+jogo = Jogo()
+jogo.loop_principal()
