@@ -142,8 +142,8 @@ class Jogo:
         self.tempo_proximo_objeto = pygame.time.get_ticks() + 10000
         self.tempo_proximo_coletavel=pygame.time.get_ticks()+ 9000
         
-        # --- ADICIONADO: Configurações do timer ---
-        self.tempo_limite = 120000  # 2 minutos em milissegundos
+        #configurações do timer
+        self.tempo_limite = 120000 
         self.tempo_inicio = pygame.time.get_ticks()
        
 
@@ -254,7 +254,7 @@ class Jogo:
             TELA.blit(texto, texto.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2)))
             self.rodando = False
         
-        # Se o jogo terminou, mostra a mensagem e espera um pouco
+        #Se o jogo terminou, mostra a mensagem e espera um pouco
         if not self.rodando:
             pygame.display.flip()
             pygame.time.wait(3000)
