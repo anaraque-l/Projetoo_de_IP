@@ -297,7 +297,8 @@ class Jogo:
             cont_ladrao = Counter(jogo.ladrao.coletados)
             cont_policia = Counter(jogo.policia.coletados)
             #formatacao dos colecionáveis 
-            texto_ladrao = "Ladrão:\n" + formatar_itens(cont_ladrao)
+            texto_ladrao = "Ladrão:" + formatar_itens(cont_ladrao)
+            print()
             texto_policia = "Polícia:\n" + formatar_itens(cont_policia)
 
             # Exibe na tela
