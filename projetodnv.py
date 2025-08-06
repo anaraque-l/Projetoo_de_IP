@@ -42,14 +42,18 @@ ALTURA_LABIRINTO = len(LABIRINTO) * TAMANHO_CELULA
 OFFSET_X = (LARGURA_TELA - LARGURA_LABIRINTO) // 2
 OFFSET_Y = (ALTURA_TELA - ALTURA_LABIRINTO) // 2
 
+CAMINHO_IMAGENS = "assets"
+
 IMAGENS = {
-    'ladrao': pygame.transform.scale(pygame.image.load('ladrao.png'), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'policia': pygame.transform.scale(pygame.image.load('policia.png'), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_policia': pygame.transform.scale(pygame.image.load('acelera_policia.png'), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'desacelera_policia': pygame.transform.scale(pygame.image.load('desacelera_policia.png'), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_ladrao': pygame.transform.scale(pygame.image.load('acelera_ladrao.png'), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arma': pygame.transform.scale(pygame.image.load('arma.png'), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'acelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'acelera_ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arma.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    
 }
+
 
 VELOCIDADE_PADRAO = 150
 VELOCIDADE_ACELERADA = 50
