@@ -7,7 +7,7 @@ pygame.init()
 LARGURA_TELA = 1200
 ALTURA_TELA = 800
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-pygame.display.set_caption("Polícia e Ladrão")
+pygame.display.set_caption("Princess Escape")
 
 BRANCO = (255, 255, 255)
 AZUL = (0, 0, 255)
@@ -299,7 +299,8 @@ class Jogo:
             #formatacao dos colecionáveis 
             texto_ladrao = "Ladrão:" + formatar_itens(cont_ladrao)
             print()
-            texto_policia = "Polícia:\n" + formatar_itens(cont_policia)
+            texto_policia = "Polícia:" + formatar_itens(cont_policia)
+            print()
 
             # Exibe na tela
             self.desenhar_texto(texto_ladrao, 10, 40)
