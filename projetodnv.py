@@ -1,11 +1,11 @@
 import pygame
 import random
 import os
-
+from collections import Counter
 pygame.init()
 
-LARGURA_TELA = 1000
-ALTURA_TELA = 750
+LARGURA_TELA = 1200
+ALTURA_TELA = 800
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
 pygame.display.set_caption("Polícia e Ladrão")
 
@@ -59,6 +59,9 @@ VELOCIDADE_PADRAO = 150
 VELOCIDADE_ACELERADA = 50
 VELOCIDADE_DESACELERADA = 250
 DURACAO_EFEITO = 5000  
+
+def formatar_itens(contador):
+    return "\n".join([f"- {item.replace('_', ' ').capitalize()}: {qtd}" for item, qtd in contador.items()])
 
 class Jogador:
     def __init__(self, x, y, imagem, teclas, tipo):
@@ -152,7 +155,7 @@ class Jogo:
 
     def gerar_fila_objetos(self): #aqui podemos manipular a quantidade de vezes que um objeto aparece
         fila = []
-        fila += ['arma'] * 4 
+        fila += ['arma'] * 7
         fila += ['acelera_policia'] * 2
         fila += ['desacelera_policia'] * 2
         fila += ['acelera_ladrao'] * 2
@@ -204,21 +207,30 @@ class Jogo:
 
     def verificar_coletas(self, agora):
         for jogador in [self.ladrao, self.policia]:
-            objetos_coletados = []
-            for obj in self.objetos:
+            for obj in self.objetos[:]:  # faz uma cópia da lista para evitar problemas ao remover
                 if jogador.x == obj.x and jogador.y == obj.y:
                     if obj.tipo == 'arma' and jogador.tipo == 'ladrao':
                         jogador.coletados.append(obj.tipo)
-                        if len(jogador.coletados) >= 5:
+                        self.objetos.remove(obj)  # Remove o objeto coletado!
+                        if jogador.coletados.count('arma') >= 5:
                             self.vencedor = 'Ladrão'
                             self.mensagem_vitoria = "Ladrão venceu coletando 5 armas!"
                             self.rodando = False
-                    elif obj.tipo != 'arma':
+
+                    elif obj.tipo == 'acelera_policia' and jogador.tipo == 'policia':
+                        jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
-                    objetos_coletados.append(obj)
-            for obj in objetos_coletados:
-                if obj in self.objetos:
-                    self.objetos.remove(obj)
+                        self.objetos.remove(obj)
+
+                    elif obj.tipo == 'desacelera_policia' and jogador.tipo == 'policia':
+                        jogador.coletados.append(obj.tipo)
+                        jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
+                        self.objetos.remove(obj)
+
+                    elif obj.tipo == 'acelera_ladrao' and jogador.tipo == 'ladrao':
+                        jogador.coletados.append(obj.tipo)
+                        jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
+                        self.objetos.remove(obj)
 
     def mostrar_tela_vitoria(self):
         duracao_exibicao = 3000  
@@ -280,9 +292,17 @@ class Jogo:
             minutos = tempo_restante_ms // 60000
             segundos = (tempo_restante_ms % 60000) // 1000
             tempo_formatado = f"{minutos}:{segundos:02d}"
-
+            #pra contar o numero de objetos 
             self.desenhar_texto(f"{tempo_formatado}", 930,10)
-            self.desenhar_texto(f"Armas coletadas: {len(self.ladrao.coletados)}", LARGURA_TELA -990, 10)
+            cont_ladrao = Counter(jogo.ladrao.coletados)
+            cont_policia = Counter(jogo.policia.coletados)
+            #formatacao dos colecionáveis 
+            texto_ladrao = "Ladrão:\n" + formatar_itens(cont_ladrao)
+            texto_policia = "Polícia:\n" + formatar_itens(cont_policia)
+
+            # Exibe na tela
+            self.desenhar_texto(texto_ladrao, 10, 40)
+            self.desenhar_texto(texto_policia, 10, 60)  
 
             pygame.display.flip()
             self.clock.tick(self.fps)
