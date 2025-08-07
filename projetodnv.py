@@ -1,13 +1,13 @@
 import pygame
 import random
 import os
-
+from collections import Counter
 pygame.init()
 
-LARGURA_TELA = 1000
-ALTURA_TELA = 750
+LARGURA_TELA = 1200
+ALTURA_TELA = 800
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-pygame.display.set_caption("Polícia e Ladrão")
+pygame.display.set_caption("Princess Escape")
 
 BRANCO = (255, 255, 255)
 AZUL = (0, 0, 255)
@@ -42,15 +42,21 @@ ALTURA_LABIRINTO = len(LABIRINTO) * TAMANHO_CELULA
 OFFSET_X = (LARGURA_TELA - LARGURA_LABIRINTO) // 2
 OFFSET_Y = (ALTURA_TELA - ALTURA_LABIRINTO) // 2
 
+
 CAMINHO_IMAGENS = "assets"
+
+FUNDO = pygame.transform.scale(
+    pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'fundo.JPG')),
+    (LARGURA_TELA, ALTURA_TELA)
+)
 
 IMAGENS = {
     'ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'acelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'acelera_ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arma.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     
 }
 
@@ -59,6 +65,9 @@ VELOCIDADE_PADRAO = 150
 VELOCIDADE_ACELERADA = 50
 VELOCIDADE_DESACELERADA = 250
 DURACAO_EFEITO = 5000  
+
+def formatar_itens(contador):
+    return "\n".join([f"- {item.replace('_', ' ').capitalize()}: {qtd}" for item, qtd in contador.items()])
 
 class Jogador:
     def __init__(self, x, y, imagem, teclas, tipo):
@@ -152,7 +161,7 @@ class Jogo:
 
     def gerar_fila_objetos(self): #aqui podemos manipular a quantidade de vezes que um objeto aparece
         fila = []
-        fila += ['arma'] * 4 
+        fila += ['arma'] * 7
         fila += ['acelera_policia'] * 2
         fila += ['desacelera_policia'] * 2
         fila += ['acelera_ladrao'] * 2
@@ -188,11 +197,23 @@ class Jogo:
         self.objetos = [obj for obj in self.objetos if agora - obj.criado_em < self.DURACAO_OBJETO]
 
     def desenhar_labirinto(self):
-        TELA.fill(COR_CAMINHO)
+        TELA.blit(FUNDO, (0, 0))
+        COR_LABIRINTO = (0, 100, 0)
+        espessura_linha = 2  # linha fina e contínua
+
         for y, linha in enumerate(self.labirinto):
             for x, celula in enumerate(linha):
                 if celula == '#':
-                    pygame.draw.rect(TELA, BRANCO, (x * TAMANHO_CELULA + OFFSET_X, y * TAMANHO_CELULA + OFFSET_Y, TAMANHO_CELULA, TAMANHO_CELULA))
+                    esquerda = x * TAMANHO_CELULA + OFFSET_X
+                    topo = y * TAMANHO_CELULA + OFFSET_Y
+                    direita = esquerda + TAMANHO_CELULA
+                    baixo = topo + TAMANHO_CELULA
+
+                    # desenha as 4 linhas da célula
+                    pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, topo), (direita, topo), espessura_linha)     # topo
+                    pygame.draw.line(TELA, COR_LABIRINTO, (direita, topo), (direita, baixo), espessura_linha)     # direita
+                    pygame.draw.line(TELA, COR_LABIRINTO, (direita, baixo), (esquerda, baixo), espessura_linha)   # baixo
+                    pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, baixo), (esquerda, topo), espessura_linha)   # esquerda
 
     def desenhar_objetos(self):
         for obj in self.objetos:
@@ -204,21 +225,32 @@ class Jogo:
 
     def verificar_coletas(self, agora):
         for jogador in [self.ladrao, self.policia]:
-            objetos_coletados = []
-            for obj in self.objetos:
+            for obj in self.objetos[:]:  # faz uma cópia da lista para evitar problemas ao remover
                 if jogador.x == obj.x and jogador.y == obj.y:
                     if obj.tipo == 'arma' and jogador.tipo == 'ladrao':
                         jogador.coletados.append(obj.tipo)
-                        if len(jogador.coletados) >= 5:
+                        self.objetos.remove(obj)  # Remove o objeto coletado!
+                        if jogador.coletados.count('arma') >= 5:
                             self.vencedor = 'Ladrão'
                             self.mensagem_vitoria = "Ladrão venceu coletando 5 armas!"
                             self.rodando = False
-                    elif obj.tipo != 'arma':
+                    elif obj.tipo == 'arma' and jogador.tipo == 'policia':
+                         self.objetos.remove(obj) #se o policial toca e n remove sem coleta
+
+                    elif obj.tipo == 'acelera_policia' and jogador.tipo == 'policia':
+                        jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
-                    objetos_coletados.append(obj)
-            for obj in objetos_coletados:
-                if obj in self.objetos:
-                    self.objetos.remove(obj)
+                        self.objetos.remove(obj)
+
+                    elif obj.tipo == 'desacelera_policia' and jogador.tipo == 'policia':
+                        jogador.coletados.append(obj.tipo)
+                        jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
+                        self.objetos.remove(obj)
+
+                    elif obj.tipo == 'acelera_ladrao' and jogador.tipo == 'ladrao':
+                        jogador.coletados.append(obj.tipo)
+                        jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
+                        self.objetos.remove(obj)
 
     def mostrar_tela_vitoria(self):
         duracao_exibicao = 3000  
@@ -280,9 +312,19 @@ class Jogo:
             minutos = tempo_restante_ms // 60000
             segundos = (tempo_restante_ms % 60000) // 1000
             tempo_formatado = f"{minutos}:{segundos:02d}"
-
+            #pra contar o numero de objetos 
             self.desenhar_texto(f"{tempo_formatado}", 930,10)
-            self.desenhar_texto(f"Armas coletadas: {len(self.ladrao.coletados)}", LARGURA_TELA -990, 10)
+            cont_ladrao = Counter(jogo.ladrao.coletados)
+            cont_policia = Counter(jogo.policia.coletados)
+            #formatacao dos colecionáveis 
+            texto_ladrao = "Ladrão:" + formatar_itens(cont_ladrao)
+            print()
+            texto_policia = "Polícia:" + formatar_itens(cont_policia)
+            print()
+
+            # Exibe na tela
+            self.desenhar_texto(texto_ladrao, 10, 40)
+            self.desenhar_texto(texto_policia, 10, 60)  
 
             pygame.display.flip()
             self.clock.tick(self.fps)
