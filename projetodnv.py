@@ -234,6 +234,8 @@ class Jogo:
                             self.vencedor = 'Ladrão'
                             self.mensagem_vitoria = "Ladrão venceu coletando 5 armas!"
                             self.rodando = False
+                    elif obj.tipo == 'arma' and jogador.tipo == 'policia':
+                         self.objetos.remove(obj) #se o policial toca e n remove sem coleta
 
                     elif obj.tipo == 'acelera_policia' and jogador.tipo == 'policia':
                         jogador.coletados.append(obj.tipo)
