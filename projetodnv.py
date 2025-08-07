@@ -42,15 +42,21 @@ ALTURA_LABIRINTO = len(LABIRINTO) * TAMANHO_CELULA
 OFFSET_X = (LARGURA_TELA - LARGURA_LABIRINTO) // 2
 OFFSET_Y = (ALTURA_TELA - ALTURA_LABIRINTO) // 2
 
+
 CAMINHO_IMAGENS = "assets"
+
+FUNDO = pygame.transform.scale(
+    pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'fundo.JPG')),
+    (LARGURA_TELA, ALTURA_TELA)
+)
 
 IMAGENS = {
     'ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'acelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'acelera_ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arma.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     
 }
 
@@ -191,11 +197,23 @@ class Jogo:
         self.objetos = [obj for obj in self.objetos if agora - obj.criado_em < self.DURACAO_OBJETO]
 
     def desenhar_labirinto(self):
-        TELA.fill(COR_CAMINHO)
+        TELA.blit(FUNDO, (0, 0))
+        COR_LABIRINTO = (0, 100, 0)
+        espessura_linha = 2  # linha fina e contínua
+
         for y, linha in enumerate(self.labirinto):
             for x, celula in enumerate(linha):
                 if celula == '#':
-                    pygame.draw.rect(TELA, BRANCO, (x * TAMANHO_CELULA + OFFSET_X, y * TAMANHO_CELULA + OFFSET_Y, TAMANHO_CELULA, TAMANHO_CELULA))
+                    esquerda = x * TAMANHO_CELULA + OFFSET_X
+                    topo = y * TAMANHO_CELULA + OFFSET_Y
+                    direita = esquerda + TAMANHO_CELULA
+                    baixo = topo + TAMANHO_CELULA
+
+                    # desenha as 4 linhas da célula
+                    pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, topo), (direita, topo), espessura_linha)     # topo
+                    pygame.draw.line(TELA, COR_LABIRINTO, (direita, topo), (direita, baixo), espessura_linha)     # direita
+                    pygame.draw.line(TELA, COR_LABIRINTO, (direita, baixo), (esquerda, baixo), espessura_linha)   # baixo
+                    pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, baixo), (esquerda, topo), espessura_linha)   # esquerda
 
     def desenhar_objetos(self):
         for obj in self.objetos:
