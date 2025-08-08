@@ -51,12 +51,12 @@ FUNDO = pygame.transform.scale(
 )
 
 IMAGENS = {
-    'ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'princesa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'rei': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'gunter': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'mentinha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)), 'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
 
     
@@ -69,7 +69,7 @@ VELOCIDADE_DESACELERADA = 250
 DURACAO_EFEITO = 5000  
 
 def formatar_itens(contador):
-    return "\n".join([f"- {item.replace('_', ' ').capitalize()}: {qtd}" for item, qtd in contador.items()])
+    return "\n".join([f" - {item.replace('_', ' ').capitalize()}: {qtd}" for item, qtd in contador.items()])
 
 class Jogador:
     def __init__(self, x, y, imagem, teclas, tipo):
@@ -90,7 +90,7 @@ class Jogador:
     def mover(self, teclas_pressionadas, agora):
         if agora < self.tempo_proximo:
             return
-        if self.tipo == 'policia' and agora < self.congelado_ate:
+        if self.tipo == 'rei' and agora < self.congelado_ate:
             return
 
         dx = dy = 0
@@ -109,13 +109,13 @@ class Jogador:
             self.tempo_proximo = agora + self.velocidade
 
     def aplicar_efeito(self, tipo_objeto, agora, jogo=None):
-        if tipo_objeto == 'acelera_policia':
+        if tipo_objeto == 'gunter':
             self.velocidade = VELOCIDADE_ACELERADA
             self.efeito_ate = agora + DURACAO_EFEITO
         elif tipo_objeto == 'desacelera_policia':
             self.velocidade = VELOCIDADE_DESACELERADA
             self.efeito_ate = agora + DURACAO_EFEITO
-        elif tipo_objeto == 'acelera_ladrao' and self.tipo == 'ladrao': #policial fica congelado
+        elif tipo_objeto == 'mentinha' and self.tipo == 'princesa': #policial fica congelado
             if jogo:
                 jogo.policia.congelado_ate = agora + DURACAO_EFEITO
 
@@ -124,7 +124,7 @@ class Jogador:
             self.velocidade = VELOCIDADE_PADRAO
 
 class ObjetoJogo:
-    TIPOS = ['acelera_policia', 'desacelera_policia', 'acelera_ladrao', 'arma'] #"acelera ladrao" é o objeto que congela o policial
+    TIPOS = ['gunter', 'desacelera_policia', 'mentinha', 'gema'] #"acelera ladrao" é o objeto que congela o policial
 
     def __init__(self, x, y, tipo, criado_em):
         self.x = x
@@ -142,10 +142,10 @@ class Jogo:
 
     def __init__(self):
         self.labirinto = LABIRINTO
-        self.ladrao = Jogador(1, 1, IMAGENS['ladrao'], 
-            {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d}, 'ladrao')
-        self.policia = Jogador(len(LABIRINTO[0]) - 2, len(LABIRINTO) - 2, IMAGENS['policia'], 
-            {'up': pygame.K_UP, 'down': pygame.K_DOWN, 'left': pygame.K_LEFT, 'right': pygame.K_RIGHT}, 'policia')
+        self.ladrao = Jogador(1, 1, IMAGENS['princesa'], 
+            {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d}, 'princesa')
+        self.policia = Jogador(len(LABIRINTO[0]) - 2, len(LABIRINTO) - 2, IMAGENS['rei'], 
+            {'up': pygame.K_UP, 'down': pygame.K_DOWN, 'left': pygame.K_LEFT, 'right': pygame.K_RIGHT}, 'rei')
         self.objetos = []
         self.tempo_ultimo_objeto = 0
         self.rodando = True
@@ -166,10 +166,10 @@ class Jogo:
 
     def gerar_fila_objetos(self): #aqui podemos manipular a quantidade de vezes que um objeto aparece
         fila = []
-        fila += ['arma'] * 7
-        fila += ['acelera_policia'] * 2
+        fila += ['gema'] * 7
+        fila += ['gunter'] * 2
         fila += ['desacelera_policia'] * 2
-        fila += ['acelera_ladrao'] * 2
+        fila += ['mentinha'] * 2
         random.shuffle(fila)
         self.fila_objetos = fila
 
@@ -244,17 +244,17 @@ class Jogo:
         for jogador in [self.ladrao, self.policia]:
             for obj in self.objetos[:]:  # faz uma cópia da lista para evitar problemas ao remover
                 if jogador.x == obj.x and jogador.y == obj.y:
-                    if obj.tipo == 'arma' and jogador.tipo == 'ladrao':
+                    if obj.tipo == 'gema' and jogador.tipo == 'princesa':
                         jogador.coletados.append(obj.tipo)
                         self.objetos.remove(obj)  # Remove o objeto coletado!
-                        if jogador.coletados.count('arma') >= 5:
+                        if jogador.coletados.count('gema') >= 5:
                             self.vencedor = 'Ladrão'
-                            self.mensagem_vitoria = "Ladrão venceu coletando 5 armas!"
+                            self.mensagem_vitoria = "A princesa conseguiu coletar as 5 gemas!"
                             self.rodando = False
-                    elif obj.tipo == 'arma' and jogador.tipo == 'policia':
+                    elif obj.tipo == 'gema' and jogador.tipo == 'rei':
                          self.objetos.remove(obj) #se o policial toca e n remove sem coleta
 
-                    elif obj.tipo == 'acelera_policia': #ACELERA POLICIA EH PRA ACELERAR OS DOIS
+                    elif obj.tipo == 'gunter': #ACELERA POLICIA EH PRA ACELERAR OS DOIS
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
@@ -265,12 +265,12 @@ class Jogo:
                         self.objetos.remove(obj)
                     
 
-                    elif obj.tipo == 'acelera_ladrao' and jogador.tipo == 'ladrao':
+                    elif obj.tipo == 'mentinha' and jogador.tipo == 'princesa':
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
                     
-                    elif obj.tipo == 'acelera_ladrao' and jogador.tipo == 'policia': #apenas remove
+                    elif obj.tipo == 'mentinha' and jogador.tipo == 'rei': #apenas remove
                         self.objetos.remove(obj)
 
     def mostrar_tela_vitoria(self):
@@ -372,13 +372,13 @@ class Jogo:
             tempo_restante_ms = max(0, self.TEMPO_PARTIDA - tempo_passado)
 
             if tempo_restante_ms == 0 and not self.vencedor:
-                self.vencedor = 'Ladrão'
-                self.mensagem_vitoria = "Ladrão venceu por tempo esgotado!"
+                self.vencedor = 'Princesa'
+                self.mensagem_vitoria = "O Rei Gelado não conseguiu capturar a Princesa a tempo!"
                 self.rodando = False
 
             if self.policia.x == self.ladrao.x and self.policia.y == self.ladrao.y and not self.vencedor:
-                self.vencedor = 'Polícia'
-                self.mensagem_vitoria = "Polícia venceu pegando o ladrão!"
+                self.vencedor = 'Rei'
+                self.mensagem_vitoria = "Oh não! O Rei Gelado capturou a Princesa Jujuba!"
                 self.rodando = False
 
             self.desenhar_labirinto()
@@ -394,9 +394,9 @@ class Jogo:
             cont_ladrao = Counter(jogo.ladrao.coletados)
             cont_policia = Counter(jogo.policia.coletados)
             #formatacao dos colecionáveis 
-            texto_ladrao = "Ladrão:" + formatar_itens(cont_ladrao)
+            texto_ladrao = "Princesa Jujuba:" + formatar_itens(cont_ladrao)
             print()
-            texto_policia = "Polícia:" + formatar_itens(cont_policia)
+            texto_policia = "Rei Gelado:" + formatar_itens(cont_policia)
             print()
 
             # Exibe na tela
