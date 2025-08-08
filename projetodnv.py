@@ -56,7 +56,9 @@ IMAGENS = {
     'acelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'acelera_ladrao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arma': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)), 'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
+
     
 }
 
@@ -107,10 +109,10 @@ class Jogador:
             self.tempo_proximo = agora + self.velocidade
 
     def aplicar_efeito(self, tipo_objeto, agora, jogo=None):
-        if tipo_objeto == 'acelera_policia' and self.tipo == 'policia':
+        if tipo_objeto == 'acelera_policia':
             self.velocidade = VELOCIDADE_ACELERADA
             self.efeito_ate = agora + DURACAO_EFEITO
-        elif tipo_objeto == 'desacelera_policia' and self.tipo == 'policia':
+        elif tipo_objeto == 'desacelera_policia':
             self.velocidade = VELOCIDADE_DESACELERADA
             self.efeito_ate = agora + DURACAO_EFEITO
         elif tipo_objeto == 'acelera_ladrao' and self.tipo == 'ladrao': #policial fica congelado
@@ -149,6 +151,9 @@ class Jogo:
         self.rodando = True
         self.clock = pygame.time.Clock()
         self.fps = 60
+        self.decoracoes = []
+        self.gerar_cenario()
+
 
         self.fila_objetos = []
         self.gerar_fila_objetos()
@@ -199,21 +204,33 @@ class Jogo:
     def desenhar_labirinto(self):
         TELA.blit(FUNDO, (0, 0))
         COR_LABIRINTO = (0, 100, 0)
-        espessura_linha = 2  # linha fina e contínua
+        espessura_linha = 2
 
         for y, linha in enumerate(self.labirinto):
             for x, celula in enumerate(linha):
                 if celula == '#':
-                    esquerda = x * TAMANHO_CELULA + OFFSET_X
-                    topo = y * TAMANHO_CELULA + OFFSET_Y
-                    direita = esquerda + TAMANHO_CELULA
-                    baixo = topo + TAMANHO_CELULA
+                    # Verifica se tem decoração
+                    decorado = False
+                    for tipo in ['arbusto', 'arvore', 'arvore_rosa', 'floresta']:
+                        if (x, y, tipo) in self.decoracoes:
+                            imagem = IMAGENS.get(tipo)
+                            if imagem:
+                                TELA.blit(imagem, (x * TAMANHO_CELULA + OFFSET_X, y * TAMANHO_CELULA + OFFSET_Y))
+                            decorado = True
+                            break
 
-                    # desenha as 4 linhas da célula
-                    pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, topo), (direita, topo), espessura_linha)     # topo
-                    pygame.draw.line(TELA, COR_LABIRINTO, (direita, topo), (direita, baixo), espessura_linha)     # direita
-                    pygame.draw.line(TELA, COR_LABIRINTO, (direita, baixo), (esquerda, baixo), espessura_linha)   # baixo
-                    pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, baixo), (esquerda, topo), espessura_linha)   # esquerda
+                    if not decorado:
+                        
+                        esquerda = x * TAMANHO_CELULA + OFFSET_X
+                        topo = y * TAMANHO_CELULA + OFFSET_Y
+                        direita = esquerda + TAMANHO_CELULA
+                        baixo = topo + TAMANHO_CELULA
+
+                        pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, topo), (direita, topo), espessura_linha)
+                        pygame.draw.line(TELA, COR_LABIRINTO, (direita, topo), (direita, baixo), espessura_linha)
+                        pygame.draw.line(TELA, COR_LABIRINTO, (direita, baixo), (esquerda, baixo), espessura_linha)
+                        pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, baixo), (esquerda, topo), espessura_linha)
+
 
     def desenhar_objetos(self):
         for obj in self.objetos:
@@ -237,19 +254,23 @@ class Jogo:
                     elif obj.tipo == 'arma' and jogador.tipo == 'policia':
                          self.objetos.remove(obj) #se o policial toca e n remove sem coleta
 
-                    elif obj.tipo == 'acelera_policia' and jogador.tipo == 'policia':
+                    elif obj.tipo == 'acelera_policia': #ACELERA POLICIA EH PRA ACELERAR OS DOIS
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
-
-                    elif obj.tipo == 'desacelera_policia' and jogador.tipo == 'policia':
+                    
+                    elif obj.tipo == 'desacelera_policia':# DESACELERA POLICIA PROS DOIS
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
+                    
 
                     elif obj.tipo == 'acelera_ladrao' and jogador.tipo == 'ladrao':
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
+                        self.objetos.remove(obj)
+                    
+                    elif obj.tipo == 'acelera_ladrao' and jogador.tipo == 'policia': #apenas remove
                         self.objetos.remove(obj)
 
     def mostrar_tela_vitoria(self):
@@ -267,6 +288,62 @@ class Jogo:
             TELA.blit(texto_img, ret_texto)
             pygame.display.flip()
             self.clock.tick(self.fps)
+
+    def gerar_cenario(self):
+        self.decoracoes = []  # Limpa as decorações de antes
+
+        linhas = len(self.labirinto)
+        colunas = len(self.labirinto[0])
+
+        for y in range(linhas):
+            for x in range(colunas):
+                if self.labirinto[y][x] == '#':
+                    
+
+                    if y == linhas - 1:
+                        #  linha  final  só arvore_rosa
+                        self.decoracoes = [(dx, dy, t) for (dx, dy, t) in self.decoracoes if not (dx == x and dy == y)]
+                        self.decoracoes.append((x, y, 'arvore_rosa'))
+                    else:
+                        if random.random() < 0.5:
+                            self.decoracoes.append((x, y, 'arbusto'))
+                        else:
+                            self.decoracoes.append((x, y, 'arvore'))
+
+        # Decorações fixas nos cantos 
+        cantos_fixos = [
+            (0, 0, 'arbusto'),
+            (colunas - 1, 0, 'floresta'),
+            (0, linhas - 1, 'arbusto'),
+            (colunas - 1, linhas - 1, 'arvore_rosa'),
+        ]
+
+        for x, y, tipo in cantos_fixos:
+            # Remove qualquer decoração existente nesse canto
+            self.decoracoes = [(dx, dy, t) for (dx, dy, t) in self.decoracoes if not (dx == x and dy == y)]
+            self.decoracoes.append((x, y, tipo))
+
+
+
+    def eh_saida(self, x, y):
+        if self.labirinto[y][x] != '#':
+            return False
+
+        linhas = len(self.labirinto)
+        colunas = len(self.labirinto[0])
+
+        if x == 0 or x == colunas - 1 or y == 0 or y == linhas - 1:
+            # Se está na borda e tem um espaço livre ao lado, é saída
+            if (x > 0 and self.labirinto[y][x - 1] == ' ') or \
+            (x < colunas - 1 and self.labirinto[y][x + 1] == ' ') or \
+            (y > 0 and self.labirinto[y - 1][x] == ' ') or \
+            (y < linhas - 1 and self.labirinto[y + 1][x] == ' '):
+                return True
+        return False
+
+
+
+
 
     def loop_principal(self):
         agora = pygame.time.get_ticks()
