@@ -51,15 +51,26 @@ FUNDO = pygame.transform.scale(
 )
 
 IMAGENS = {
-    'princesa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'ladrao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'rei': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    # Imagens da princesa
+    'princesa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'princesa.png')), (TAMANHO_CELULA, TAMANHO_CELULA)), # Imagem padrão
+    'princesa_D': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'princesaD.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'princesa_E': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'princesaE.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'princesa_BC': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'princesaBC.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+
+    # Imagens do Rei Gelado
+    'rei': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'rei.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'rei_D': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiD.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'rei_E': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiE.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'rei_BC': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiBC.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+
+    # Outras imagens
     'gunter': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'mentinha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)), 'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
-
-    
+    'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
 }
 
 
@@ -75,7 +86,8 @@ class Jogador:
     def __init__(self, x, y, imagem, teclas, tipo):
         self.x = x
         self.y = y
-        self.imagem = imagem
+        self.imagem_padrao = imagem 
+        self.imagem_atual = imagem 
         self.teclas = teclas
         self.tipo = tipo
         self.velocidade = VELOCIDADE_PADRAO
@@ -85,28 +97,52 @@ class Jogador:
         self.coletados = []
 
     def desenhar(self):
-        TELA.blit(self.imagem, (self.x * TAMANHO_CELULA + OFFSET_X, self.y * TAMANHO_CELULA + OFFSET_Y))
+        TELA.blit(self.imagem_atual, (self.x * TAMANHO_CELULA + OFFSET_X, self.y * TAMANHO_CELULA + OFFSET_Y))
 
     def mover(self, teclas_pressionadas, agora):
         if agora < self.tempo_proximo:
             return
         if self.tipo == 'rei' and agora < self.congelado_ate:
+            # deixa a imagem atual se o jogador estiver congelado
             return
 
         dx = dy = 0
+        nova_imagem_key = None # chave para o dicionário de imagens
+
         if teclas_pressionadas[self.teclas['up']]:
             dy = -1
+            if self.tipo == 'rei':
+                nova_imagem_key = 'rei_BC'
+            elif self.tipo == 'princesa':
+                nova_imagem_key = 'princesa_BC'
         elif teclas_pressionadas[self.teclas['down']]:
             dy = 1
+            if self.tipo == 'rei':
+                nova_imagem_key = 'rei'
+            elif self.tipo == 'princesa':
+                nova_imagem_key = 'princesa'
         elif teclas_pressionadas[self.teclas['left']]:
             dx = -1
+            if self.tipo == 'rei':
+                nova_imagem_key = 'rei_E'
+            elif self.tipo == 'princesa':
+                nova_imagem_key = 'princesa_E'
         elif teclas_pressionadas[self.teclas['right']]:
             dx = 1
+            if self.tipo == 'rei':
+                nova_imagem_key = 'rei_D'
+            elif self.tipo == 'princesa':
+                nova_imagem_key = 'princesa_D'
 
+        # Se houve movimento, atualize a imagem
+        if nova_imagem_key:
+            self.imagem_atual = IMAGENS[nova_imagem_key]
+        
         novo_x, novo_y = self.x + dx, self.y + dy
         if 0 <= novo_y < len(LABIRINTO) and 0 <= novo_x < len(LABIRINTO[0]) and LABIRINTO[novo_y][novo_x] != '#':
             self.x, self.y = novo_x, novo_y
             self.tempo_proximo = agora + self.velocidade
+
 
     def aplicar_efeito(self, tipo_objeto, agora, jogo=None):
         if tipo_objeto == 'gunter':
@@ -141,18 +177,31 @@ class Jogo:
     TEMPO_PARTIDA = 90 * 1000    #90 segundos
 
     def __init__(self):
-        self.labirinto = LABIRINTO
-        self.ladrao = Jogador(1, 1, IMAGENS['princesa'], 
+       
+        
+        self.labirinto = LABIRINTO 
+
+        self.ladrao = Jogador(1, 1, IMAGENS['princesa_E'], 
             {'up': pygame.K_w, 'down': pygame.K_s, 'left': pygame.K_a, 'right': pygame.K_d}, 'princesa')
-        self.policia = Jogador(len(LABIRINTO[0]) - 2, len(LABIRINTO) - 2, IMAGENS['rei'], 
+        self.policia = Jogador(len(LABIRINTO[0]) - 2, len(LABIRINTO) - 2, IMAGENS['rei_E'], 
             {'up': pygame.K_UP, 'down': pygame.K_DOWN, 'left': pygame.K_LEFT, 'right': pygame.K_RIGHT}, 'rei')
+        
         self.objetos = []
         self.tempo_ultimo_objeto = 0
         self.rodando = True
         self.clock = pygame.time.Clock()
         self.fps = 60
         self.decoracoes = []
-        self.gerar_cenario()
+        
+        
+        self.gerar_cenario() 
+
+        self.fila_objetos = []
+        self.gerar_fila_objetos()
+        self.tempo_inicio = pygame.time.get_ticks()
+        self.fonte = pygame.font.SysFont(None, 36)
+        self.vencedor = None 
+        self.mensagem_vitoria = ""
 
 
         self.fila_objetos = []
