@@ -15,22 +15,36 @@ VERMELHO = (255, 0, 0)
 PRETO = (0, 0, 0)
 COR_CAMINHO = (0, 100, 0)
 
+MAPEAMENTO_PAREDES = {
+    'C': 'coluna',
+    'L': 'linha',
+    'D': 'coluna_direita',
+    'E': 'coluna_esquerda',
+    'I': 'intersecao',
+    'B': 'linha_baixo',
+    'U': 'linha_cima',
+    'W': 'cima_esquerda',
+    'X': 'cima_direita',
+    'Y': 'baixo_esquerda',
+    'Z': 'baixo_direita'
+}
+
 LABIRINTO_STR = [
-    "#################################",
-    "#     #       #       #         #",
-    "# ### # ##### # ### ##### ##### #",
-    "# #   #     #   # #     #     # #",
-    "# # ##### # ##### # ### # ### # #",
-    "# #     # #     #   #   #   #   #",
-    "# ##### # ### # ##### ##### ### #",
-    "#     #   #   #     #     #     #",
-    "##### ### # ####### # ######### #",
-    "#   #     #   #     #         # #",
-    "# # ####### # # ########### # # #",
-    "# #         #   #         # #   #",
-    "# ### ####### # # ####### # ### #",
-    "#             #   #             #",
-    "#################################",
+    "ZLLLLLBLLLLLLLBLLLLLLLBLLLLLLLLLY",
+    "C     C       C       C         C",
+    "C ZLL C LLLLY C ZLY LLULY LLLLY C",
+    "C C   C     C   C C     C     C C",
+    "C C LLULY C XLLLE C ZLL C LLY C C",
+    "C C     C C     C   C   C   C   C",
+    "C XLLLY C DLL C XLLLE LLULY XLL C",
+    "C     C   C   C     C     C     C",
+    "DLLLY XLL C LLILLLL C LLLLULLLY C",
+    "C   C     C   C     C         C C",
+    "C C XLLLLLW C C ZLLLULLLLLY C C C",
+    "C C         C   C         C C   C",
+    "C XLL LLLLLLW C C ZLLLLLL C XLL C",
+    "C             C   C             C",
+    "XLLLLLLLLLLLLLULLLULLLLLLLLLLLLLW",
 ]
 LABIRINTO = [list(linha) for linha in LABIRINTO_STR]
 
@@ -56,8 +70,21 @@ IMAGENS = {
     'gunter': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'mentinha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)), 'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
+    'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)), 
+    'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'coluna': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'linha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'coluna_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'coluna_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'intersecao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_intersecao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'linha_baixo': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha_baixo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'linha_cima': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha_cima.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'cima_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'cima_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'baixo_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
 
     
 }
@@ -211,7 +238,7 @@ class Jogo:
                 if celula == '#':
                     # Verifica se tem decoração
                     decorado = False
-                    for tipo in ['arbusto', 'arvore', 'arvore_rosa', 'floresta']:
+                    for tipo in ['coluna', 'linha', 'coluna_direita', 'coluna_esquerda', 'intersecao', 'linha_baixo', 'linha_cima', 'cima_esquerda', 'cima_direita', 'baixo_esquerda', 'baixo_direita']:
                         if (x, y, tipo) in self.decoracoes:
                             imagem = IMAGENS.get(tipo)
                             if imagem:
@@ -297,32 +324,12 @@ class Jogo:
 
         for y in range(linhas):
             for x in range(colunas):
-                if self.labirinto[y][x] == '#':
-                    
+                if self.labirinto[y][x] in MAPEAMENTO_PAREDES:
+                    celula = self.labirinto[y][x]
 
-                    if y == linhas - 1:
-                        #  linha  final  só arvore_rosa
-                        self.decoracoes = [(dx, dy, t) for (dx, dy, t) in self.decoracoes if not (dx == x and dy == y)]
-                        self.decoracoes.append((x, y, 'arvore_rosa'))
-                    else:
-                        if random.random() < 0.5:
-                            self.decoracoes.append((x, y, 'arbusto'))
-                        else:
-                            self.decoracoes.append((x, y, 'arvore'))
-
-        # Decorações fixas nos cantos 
-        cantos_fixos = [
-            (0, 0, 'arbusto'),
-            (colunas - 1, 0, 'floresta'),
-            (0, linhas - 1, 'arbusto'),
-            (colunas - 1, linhas - 1, 'arvore_rosa'),
-        ]
-
-        for x, y, tipo in cantos_fixos:
-            # Remove qualquer decoração existente nesse canto
-            self.decoracoes = [(dx, dy, t) for (dx, dy, t) in self.decoracoes if not (dx == x and dy == y)]
-            self.decoracoes.append((x, y, tipo))
-
+                    tipo_imagem = MAPEAMENTO_PAREDES[celula]
+                    self.decoracoes.append((x, y, tipo_imagem))
+                    self.labirinto[y][x] = '#'
 
 
     def eh_saida(self, x, y):
