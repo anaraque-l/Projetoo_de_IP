@@ -49,6 +49,7 @@ As imagens e demais recursos visuais foram organizados em diretórios específic
 | Marcos Silva           | Elaboração da documentação e README.md                                           |
 | Luciano Paixão         | Preparação da apresentação final do projeto                                      |
 
+l
 ---
 
 ## Conceitos Utilizados na Disciplina
