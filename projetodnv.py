@@ -244,7 +244,7 @@ IMAGENS = {
     # Imagens do Rei Gelado
     'rei': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'rei11.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'rei_D': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiD111.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'rei_E': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiE111.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'rei_E': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiE111w.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'rei_BC': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'reiC.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
 
     # Outras imagens
