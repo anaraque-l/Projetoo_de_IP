@@ -2,6 +2,79 @@ import pygame
 import random
 import os
 
+import pygame
+import sys
+
+# Inicializa o pygame
+pygame.init()
+
+# Tamanho da janela
+LARGURA, ALTURA = 800, 600
+tela = pygame.display.set_mode((LARGURA, ALTURA))
+pygame.display.set_caption("Labirinto - Tela Inicial")
+
+# Cores
+BRANCO = (255, 255, 255)
+COR_BOTAO = (255, 100, 100)
+COR_BOTAO_HOVER = (255, 150, 150)
+COR_TEXTO = (0, 0, 0)
+
+# Carrega imagens (coloque os arquivos na mesma pasta do código)
+fundo = pygame.image.load("floresta_doce.jpg")  
+fundo = pygame.transform.scale(fundo, (LARGURA, ALTURA))
+
+princesa = pygame.image.load("princesa_jujuba.png")
+princesa = pygame.transform.scale(princesa, (150, 200))
+
+rei = pygame.image.load("rei_gelado.png")
+rei = pygame.transform.scale(rei, (150, 200))
+
+# Fonte para o botão
+fonte = pygame.font.SysFont(None, 50)
+
+# Botão "Jogar"
+retangulo_botao = pygame.Rect(LARGURA//2 - 100, ALTURA//2 + 100, 200, 60)
+
+def desenhar_botao(pos_mouse):
+    """Desenha o botão e muda a cor se o mouse estiver sobre ele."""
+    if retangulo_botao.collidepoint(pos_mouse):
+        cor = COR_BOTAO_HOVER
+    else:
+        cor = COR_BOTAO
+    pygame.draw.rect(tela, cor, retangulo_botao, border_radius=10)
+    texto = fonte.render("Jogar", True, COR_TEXTO)
+    texto_retangulo = texto.get_rect(center=retangulo_botao.center)
+    tela.blit(texto, texto_retangulo)
+
+def tela_inicial():
+    relogio = pygame.time.Clock()
+    
+    while True:
+        pos_mouse = pygame.mouse.get_pos()
+
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            # Clique do mouse
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                if retangulo_botao.collidepoint(pos_mouse):
+                    print("Iniciando o jogo...")  # Aqui depois entra o código do jogo
+
+        # Desenha os elementos
+        tela.blit(fundo, (0, 0))
+        tela.blit(princesa, (100, ALTURA//2 - 150))
+        tela.blit(rei, (LARGURA - 250, ALTURA//2 - 150))
+        desenhar_botao(pos_mouse)
+
+        pygame.display.flip()
+        relogio.tick(60)
+
+if __name__ == "__main__":
+    tela_inicial()
+
+
 pygame.init()
 
 LARGURA_TELA = 1000
