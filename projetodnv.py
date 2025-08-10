@@ -388,32 +388,12 @@ class Jogo:
 
         for y in range(linhas):
             for x in range(colunas):
-                if self.labirinto[y][x] == '#':
-                    
+                if self.labirinto[y][x] in MAPEAMENTO_PAREDES:
+                    celula = self.labirinto[y][x]
 
-                    if y == linhas - 1:
-                        #  linha  final  só arvore_rosa
-                        self.decoracoes = [(dx, dy, t) for (dx, dy, t) in self.decoracoes if not (dx == x and dy == y)]
-                        self.decoracoes.append((x, y, 'arvore_rosa'))
-                    else:
-                        if random.random() < 0.5:
-                            self.decoracoes.append((x, y, 'arbusto'))
-                        else:
-                            self.decoracoes.append((x, y, 'arvore'))
-
-        # Decorações fixas nos cantos 
-        cantos_fixos = [
-            (0, 0, 'arbusto'),
-            (colunas - 1, 0, 'floresta'),
-            (0, linhas - 1, 'arbusto'),
-            (colunas - 1, linhas - 1, 'arvore_rosa'),
-        ]
-
-        for x, y, tipo in cantos_fixos:
-            # Remove qualquer decoração existente nesse canto
-            self.decoracoes = [(dx, dy, t) for (dx, dy, t) in self.decoracoes if not (dx == x and dy == y)]
-            self.decoracoes.append((x, y, tipo))
-
+                    tipo_imagem = MAPEAMENTO_PAREDES[celula]
+                    self.decoracoes.append((x, y, tipo_imagem))
+                    self.labirinto[y][x] = '#'
 
 
     def eh_saida(self, x, y):
@@ -431,6 +411,7 @@ class Jogo:
             (y < linhas - 1 and self.labirinto[y + 1][x] == ' '):
                 return True
         return False
+
 
 
 
