@@ -25,20 +25,15 @@ def tela_como_jogar(tela):
                 if botao_voltar.collidepoint(pos_mouse):
                     rodando = False
 
-        tela.fill((255, 255, 255))  # fundo branco
+        tela.fill((255, 255, 255))  
 
-        texto = [
-            "Como Jogar:",
-            "- Use WASD para mover o ladrão.",
-            "- Use as setas para mover a polícia.",
-            "- Colete 5 armas para vencer como ladrão.",
-            "- Pegue o ladrão para vencer como polícia.",
-            "",
-            "Clique em Voltar para retornar ao menu."
-        ]
-        for i, linha in enumerate(texto):
-            img_texto = fonte.render(linha, True, (0, 0, 0))
-            tela.blit(img_texto, (50, 50 + i * 30))
+        
+        imagem_como_jogar = pygame.image.load("assets/como_jogar.png")
+        imagem_como_jogar = pygame.transform.scale(imagem_como_jogar, (800, 600))  
+
+
+        tela.blit(imagem_como_jogar, (0, 0))
+
 
         # Botão Voltar
         cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
@@ -69,21 +64,12 @@ def tela_historia(tela):
                 if botao_voltar.collidepoint(pos_mouse):
                     rodando = False
 
-        tela.fill((255, 255, 255))  # fundo branco
+        tela.fill((255, 255, 255))  
 
-        texto = [
-            "História:",
-            "No reino da Floresta Doce, um ladrão tenta roubar",
-            "as preciosas armas do castelo, mas a polícia está",
-            "sempre pronta para pegá-lo.",
-            "",
-            "Você pode escolher ser o ladrão ou a polícia.",
-            "",
-            "Clique em Voltar para retornar ao menu."
-        ]
-        for i, linha in enumerate(texto):
-            img_texto = fonte.render(linha, True, (0, 0, 0))
-            tela.blit(img_texto, (50, 50 + i * 30))
+        imagem_historia = pygame.image.load("assets/historia.png")
+        imagem_historia = pygame.transform.scale(imagem_historia, (900, 550))
+        tela.blit(imagem_historia, (-100, 20))
+
 
         # Botão Voltar
         cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
@@ -149,7 +135,7 @@ def tela_inicial():
         tela.blit(rei, (LARGURA - 300, ALTURA//2 - 150))
 
         titulo_img = pygame.image.load("assets/fonte.png")
-        titulo_img_pequena = pygame.transform.scale(titulo_img, (350, 300))  # ajuste o tamanho que quiser
+        titulo_img_pequena = pygame.transform.scale(titulo_img, (350, 300)) 
 
         tela.blit(titulo_img_pequena, (LARGURA//2 - titulo_img_pequena.get_width()//2, -10))
 
@@ -167,12 +153,22 @@ def tela_inicial():
         relogio.tick(60)
 
 
-if __name__ == "__main__":
+# Ponto de partida do jogo
+def iniciar_jogo():
     tela_inicial()
+
     LARGURA_TELA = 1200
     ALTURA_TELA = 800
     TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
     pygame.display.set_caption("Royal Rush")
+
+# Chamando o jogo
+iniciar_jogo()
+
+LARGURA_TELA = 1200
+ALTURA_TELA = 800
+TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
+pygame.display.set_caption("Royal Rush")
 
 BRANCO = (255, 255, 255)
 AZUL = (0, 0, 255)
