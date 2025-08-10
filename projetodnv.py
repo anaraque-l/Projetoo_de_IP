@@ -1,54 +1,131 @@
 import pygame
 import random
 import os
-
 import pygame
 import sys
 
-# Inicializa o pygame
-pygame.init()
 
-# Tamanho da janela
-LARGURA, ALTURA = 800, 600
-tela = pygame.display.set_mode((LARGURA, ALTURA))
-pygame.display.set_caption("Labirinto - Tela Inicial")
+def tela_como_jogar(tela):
+    fonte = pygame.font.SysFont(None, 30)
+    botao_voltar = pygame.Rect(10, 10, 20, 20)
+    cor_botao = (200, 200, 200)
+    cor_botao_hover = (150, 150, 150)
+    cor_texto = (0, 0, 0)
+    relogio = pygame.time.Clock()
+    rodando = True
 
-# Cores
-BRANCO = (255, 255, 255)
-COR_BOTAO = (255, 100, 100)
-COR_BOTAO_HOVER = (255, 150, 150)
-COR_TEXTO = (0, 0, 0)
+    while rodando:
+        pos_mouse = pygame.mouse.get_pos()
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                if botao_voltar.collidepoint(pos_mouse):
+                    rodando = False
 
-# Carrega imagens (coloque os arquivos na mesma pasta do código)
-fundo = pygame.image.load("floresta_doce.jpg")  
-fundo = pygame.transform.scale(fundo, (LARGURA, ALTURA))
+        tela.fill((255, 255, 255))  # fundo branco
 
-princesa = pygame.image.load("princesa_jujuba.png")
-princesa = pygame.transform.scale(princesa, (150, 200))
+        texto = [
+            "Como Jogar:",
+            "- Use WASD para mover o ladrão.",
+            "- Use as setas para mover a polícia.",
+            "- Colete 5 armas para vencer como ladrão.",
+            "- Pegue o ladrão para vencer como polícia.",
+            "",
+            "Clique em Voltar para retornar ao menu."
+        ]
+        for i, linha in enumerate(texto):
+            img_texto = fonte.render(linha, True, (0, 0, 0))
+            tela.blit(img_texto, (50, 50 + i * 30))
 
-rei = pygame.image.load("rei_gelado.png")
-rei = pygame.transform.scale(rei, (150, 200))
+        # Botão Voltar
+        cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
+        pygame.draw.rect(tela, cor_atual, botao_voltar, border_radius=8)
+        texto_botao = fonte.render("Voltar", True, cor_texto)
+        tela.blit(texto_botao, texto_botao.get_rect(center=botao_voltar.center))
 
-# Fonte para o botão
-fonte = pygame.font.SysFont(None, 50)
+        pygame.display.flip()
+        relogio.tick(60)
 
-# Botão "Jogar"
-retangulo_botao = pygame.Rect(LARGURA//2 - 100, ALTURA//2 + 100, 200, 60)
 
-def desenhar_botao(pos_mouse):
-    """Desenha o botão e muda a cor se o mouse estiver sobre ele."""
-    if retangulo_botao.collidepoint(pos_mouse):
-        cor = COR_BOTAO_HOVER
-    else:
-        cor = COR_BOTAO
-    pygame.draw.rect(tela, cor, retangulo_botao, border_radius=10)
-    texto = fonte.render("Jogar", True, COR_TEXTO)
-    texto_retangulo = texto.get_rect(center=retangulo_botao.center)
-    tela.blit(texto, texto_retangulo)
+def tela_historia(tela):
+    fonte = pygame.font.SysFont(None, 30)
+    botao_voltar = pygame.Rect(10, 10, 20, 20)
+    cor_botao = (200, 200, 200)
+    cor_botao_hover = (150, 150, 150)
+    cor_texto = (0, 0, 0)
+    relogio = pygame.time.Clock()
+    rodando = True
+
+    while rodando:
+        pos_mouse = pygame.mouse.get_pos()
+        for evento in pygame.event.get():
+            if evento.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif evento.type == pygame.MOUSEBUTTONDOWN:
+                if botao_voltar.collidepoint(pos_mouse):
+                    rodando = False
+
+        tela.fill((255, 255, 255))  # fundo branco
+
+        texto = [
+            "História:",
+            "No reino da Floresta Doce, um ladrão tenta roubar",
+            "as preciosas armas do castelo, mas a polícia está",
+            "sempre pronta para pegá-lo.",
+            "",
+            "Você pode escolher ser o ladrão ou a polícia.",
+            "",
+            "Clique em Voltar para retornar ao menu."
+        ]
+        for i, linha in enumerate(texto):
+            img_texto = fonte.render(linha, True, (0, 0, 0))
+            tela.blit(img_texto, (50, 50 + i * 30))
+
+        # Botão Voltar
+        cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
+        pygame.draw.rect(tela, cor_atual, botao_voltar, border_radius=8)
+        texto_botao = fonte.render("<", True, cor_texto)
+        tela.blit(texto_botao, texto_botao.get_rect(center=botao_voltar.center))
+
+        pygame.display.flip()
+        relogio.tick(60)
+
 
 def tela_inicial():
-    relogio = pygame.time.Clock()
+    pygame.init()
+
+    LARGURA, ALTURA = 800, 600
+    tela = pygame.display.set_mode((LARGURA, ALTURA))
+    pygame.display.set_caption("Labirinto - Tela Inicial")
+
+    # Cores e fontes
+    COR_TEXTO = (0, 0, 0)  # Preto para o texto dos botões
+    COR_BOTAO = (255, 182, 193)       # Rosa claro
+    COR_BOTAO_HOVER = (255, 105, 180) # Rosa mais forte
+    COR_BOTAO_AZUL = (173, 216, 230)  # Azul claro
+    COR_BOTAO_AZUL_HOVER = (100, 149, 237) # Azul mais forte
+    COR_SOMBRA = (200, 100, 130)      # Sombra rosa
+    COR_SOMBRA_AZUL = (90, 120, 170)  # Sombra azul
+
+    fonte_botao = pygame.font.SysFont(None, 30, bold=True)
+
+    # Fundo e personagens
+    fundo = pygame.transform.scale(pygame.image.load("assets/floresta_doceP.png"), (LARGURA, ALTURA))
+    princesa = pygame.transform.scale(pygame.image.load("assets/princesa_jujubaP.png"), (300, 450))
+    rei = pygame.transform.scale(pygame.image.load("assets/rei_geladoP.png"), (300, 500))
+
+    # Botões
+    botoes = [
+        {"texto": "JOGAR", "rect": pygame.Rect(LARGURA//2 - 100, 300, 200, 60), "cor": COR_BOTAO, "hover": COR_BOTAO_HOVER, "sombra": COR_SOMBRA},
+        {"texto": "HISTÓRIA", "rect": pygame.Rect(LARGURA//2 - 100, 380, 200, 60), "cor": COR_BOTAO_AZUL, "hover": COR_BOTAO_AZUL_HOVER, "sombra": COR_SOMBRA_AZUL},
+        {"texto": "COMO JOGAR", "rect": pygame.Rect(LARGURA//2 - 100, 460, 200, 60), "cor": COR_BOTAO, "hover": COR_BOTAO_HOVER, "sombra": COR_SOMBRA},
+    ]
     
+    relogio = pygame.time.Clock()
+
     while True:
         pos_mouse = pygame.mouse.get_pos()
 
@@ -56,26 +133,42 @@ def tela_inicial():
             if evento.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
-            # Clique do mouse
             if evento.type == pygame.MOUSEBUTTONDOWN:
-                if retangulo_botao.collidepoint(pos_mouse):
-                    print("Iniciando o jogo...")  # Aqui depois entra o código do jogo
+                for botao in botoes:
+                    if botao["rect"].collidepoint(pos_mouse):
+                        if botao["texto"] == "JOGAR":
+                            return  # Sai da tela inicial e inicia jogo
+                        elif botao["texto"] == "HISTÓRIA":
+                            tela_historia(tela)
+                        elif botao["texto"] == "COMO JOGAR":
+                            tela_como_jogar(tela)
 
-        # Desenha os elementos
         tela.blit(fundo, (0, 0))
-        tela.blit(princesa, (100, ALTURA//2 - 150))
-        tela.blit(rei, (LARGURA - 250, ALTURA//2 - 150))
-        desenhar_botao(pos_mouse)
+        tela.blit(princesa, (10, ALTURA//2 - 150))
+        tela.blit(rei, (LARGURA - 300, ALTURA//2 - 150))
+
+        titulo_img = pygame.image.load("assets/fonte.png")
+        titulo_img_pequena = pygame.transform.scale(titulo_img, (350, 300))  # ajuste o tamanho que quiser
+
+        tela.blit(titulo_img_pequena, (LARGURA//2 - titulo_img_pequena.get_width()//2, -10))
+
+        # Desenha botões
+        for botao in botoes:
+            cor = botao["hover"] if botao["rect"].collidepoint(pos_mouse) else botao["cor"]
+            sombra_rect = botao["rect"].copy()
+            sombra_rect.move_ip(4, 4)
+            pygame.draw.rect(tela, botao["sombra"], sombra_rect, border_radius=12)
+            pygame.draw.rect(tela, cor, botao["rect"], border_radius=12)
+            texto_botao = fonte_botao.render(botao["texto"], True, COR_TEXTO)
+            tela.blit(texto_botao, texto_botao.get_rect(center=botao["rect"].center))
 
         pygame.display.flip()
         relogio.tick(60)
 
+
 if __name__ == "__main__":
     tela_inicial()
-
-
-pygame.init()
+    pygame.init()
 
 LARGURA_TELA = 1000
 ALTURA_TELA = 750
