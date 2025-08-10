@@ -27,9 +27,9 @@ As imagens e demais recursos visuais foram organizados em diretórios específic
 ---
 
 ## Capturas de Tela
-![Menu do Jogo](tela_inicial.pnj)
-![Labirinto](labirinto.pnj)
-![Tela Final](tela_final.pnj)
+![Menu do Jogo](assets/tela_inicial.pnj)
+![Labirinto](assets/labirinto.pnj)
+![Tela Final](assets/tela_final.pnj)
 
 ## Ferramentas e Justificativas
 
@@ -51,6 +51,7 @@ As imagens e demais recursos visuais foram organizados em diretórios específic
 | Marcos Silva           | Elaboração da documentação e README.md                                           |
 | Luciano Paixão         | Preparação da apresentação final do projeto                                      |
 
+l
 ---
 
 ## Conceitos Utilizados na Disciplina
