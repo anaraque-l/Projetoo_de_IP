@@ -6,7 +6,6 @@ pygame.init()
 pygame.mixer.init()
 
 
-
 LARGURA_TELA = 1200
 ALTURA_TELA = 800
 TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
@@ -72,7 +71,7 @@ reiganhou=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'reiganhou.mp3'))
 princesaganhou=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'princesa ganhou.mp3'))
 
 FUNDO = pygame.transform.scale(
-    pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'fundo.JPG')),
+    pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'fundo.png')),
     (LARGURA_TELA, ALTURA_TELA)
 )
 
