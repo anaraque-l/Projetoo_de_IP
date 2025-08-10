@@ -250,7 +250,7 @@ class Jogo:
 
     def gerar_objeto(self, agora):
         if not self.fila_objetos:
-            return
+            self.gerar_fila_objetos()
         if agora - self.tempo_ultimo_objeto >= self.INTERVALO_NOVO_OBJETO:
             tipo = self.fila_objetos.pop(0)
             pos = self.encontrar_posicao_aleatoria()
@@ -437,12 +437,14 @@ class Jogo:
 
             if tempo_restante_ms == 0 and not self.vencedor:
                 self.vencedor = 'Princesa'
+                pygame.mixer.music.stop()
                 princesaganhou.play()
                 self.mensagem_vitoria = "O Rei Gelado não conseguiu capturar a Princesa a tempo!"
                 self.rodando = False
 
             if self.policia.x == self.ladrao.x and self.policia.y == self.ladrao.y and not self.vencedor:
                 self.vencedor = 'Rei'
+                pygame.mixer.music.stop()
                 reiganhou.play()
                 self.mensagem_vitoria = "Oh não! O Rei Gelado capturou a Princesa Jujuba!"
                 self.rodando = False
