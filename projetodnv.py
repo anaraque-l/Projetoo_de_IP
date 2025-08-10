@@ -18,22 +18,36 @@ VERMELHO = (255, 0, 0)
 PRETO = (0, 0, 0)
 COR_CAMINHO = (0, 100, 0)
 
+MAPEAMENTO_PAREDES = {
+    'C': 'coluna',
+    'L': 'linha',
+    'D': 'coluna_direita',
+    'E': 'coluna_esquerda',
+    'I': 'intersecao',
+    'B': 'linha_baixo',
+    'U': 'linha_cima',
+    'W': 'cima_esquerda',
+    'X': 'cima_direita',
+    'Y': 'baixo_esquerda',
+    'Z': 'baixo_direita'
+}
+
 LABIRINTO_STR = [
-    "#################################",
-    "#     #       #       #         #",
-    "# ### # ##### # ### ##### ##### #",
-    "# #   #     #   # #     #     # #",
-    "# # ##### # ##### # ### # ### # #",
-    "# #     # #     #   #   #   #   #",
-    "# ##### # ### # ##### ##### ### #",
-    "#     #   #   #     #     #     #",
-    "##### ### # ####### # ######### #",
-    "#   #     #   #     #         # #",
-    "# # ####### # # ########### # # #",
-    "# #         #   #         # #   #",
-    "# ### ####### # # ####### # ### #",
-    "#             #   #             #",
-    "#################################",
+    "ZLLLLLBLLLLLLLBLLLLLLLBLLLLLLLLLY",
+    "C     C       C       C         C",
+    "C ZLL C LLLLY C ZLY LLULY LLLLY C",
+    "C C   C     C   C C     C     C C",
+    "C C LLULY C XLLLE C ZLL C LLY C C",
+    "C C     C C     C   C   C   C   C",
+    "C XLLLY C DLL C XLLLE LLULY XLL C",
+    "C     C   C   C     C     C     C",
+    "DLLLY XLL C LLILLLL C LLLLULLLY C",
+    "C   C     C   C     C         C C",
+    "C C XLLLLLW C C ZLLLULLLLLY C C C",
+    "C C         C   C         C C   C",
+    "C XLL LLLLLLW C C ZLLLLLL C XLL C",
+    "C             C   C             C",
+    "XLLLLLLLLLLLLLULLLULLLLLLLLLLLLLW",
 ]
 LABIRINTO = [list(linha) for linha in LABIRINTO_STR]
 
