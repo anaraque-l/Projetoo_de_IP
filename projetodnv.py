@@ -299,7 +299,7 @@ class Jogo:
                 if celula == '#':
                     # Verifica se tem decoração
                     decorado = False
-                    for tipo in ['arbusto', 'arvore', 'arvore_rosa', 'floresta']:
+                    for tipo in ['coluna', 'linha', 'coluna_direita', 'coluna_esquerda', 'intersecao', 'linha_baixo', 'linha_cima', 'cima_esquerda', 'cima_direita', 'baixo_esquerda', 'baixo_direita']:
                         if (x, y, tipo) in self.decoracoes:
                             imagem = IMAGENS.get(tipo)
                             if imagem:
