@@ -172,7 +172,7 @@ if __name__ == "__main__":
     LARGURA_TELA = 1200
     ALTURA_TELA = 800
     TELA = pygame.display.set_mode((LARGURA_TELA, ALTURA_TELA))
-    pygame.display.set_caption("Princess Escape")
+    pygame.display.set_caption("Royal Rush")
 
 BRANCO = (255, 255, 255)
 AZUL = (0, 0, 255)
