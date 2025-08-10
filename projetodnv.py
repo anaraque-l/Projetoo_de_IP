@@ -3,6 +3,9 @@ import random
 import os
 from collections import Counter
 pygame.init()
+pygame.mixer.init()
+
+
 
 LARGURA_TELA = 1200
 ALTURA_TELA = 800
@@ -44,6 +47,15 @@ OFFSET_Y = (ALTURA_TELA - ALTURA_LABIRINTO) // 2
 
 
 CAMINHO_IMAGENS = "assets"
+
+#inicialização e ajustes da musica e sons de coleta
+pygame.mixer.music.load(os.path.join(CAMINHO_IMAGENS, 'musica.wav'))
+pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.play(-1)
+somdecoleta=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'somdagema.mp3'))
+somdogunter=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'gunter.mp3'))
+reiganhou=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'reiganhou.mp3'))
+princesaganhou=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'princesa ganhou.mp3'))
 
 FUNDO = pygame.transform.scale(
     pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'fundo.JPG')),
@@ -294,16 +306,19 @@ class Jogo:
             for obj in self.objetos[:]:  # faz uma cópia da lista para evitar problemas ao remover
                 if jogador.x == obj.x and jogador.y == obj.y:
                     if obj.tipo == 'gema' and jogador.tipo == 'princesa':
+                        somdecoleta.play()
                         jogador.coletados.append(obj.tipo)
                         self.objetos.remove(obj)  # Remove o objeto coletado!
                         if jogador.coletados.count('gema') >= 5:
                             self.vencedor = 'Ladrão'
+                            princesaganhou.play()
                             self.mensagem_vitoria = "A princesa conseguiu coletar as 5 gemas!"
                             self.rodando = False
                     elif obj.tipo == 'gema' and jogador.tipo == 'rei':
                          self.objetos.remove(obj) #se o policial toca e n remove sem coleta
 
                     elif obj.tipo == 'gunter': #ACELERA POLICIA EH PRA ACELERAR OS DOIS
+                        somdogunter.play()
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
@@ -422,11 +437,13 @@ class Jogo:
 
             if tempo_restante_ms == 0 and not self.vencedor:
                 self.vencedor = 'Princesa'
+                princesaganhou.play()
                 self.mensagem_vitoria = "O Rei Gelado não conseguiu capturar a Princesa a tempo!"
                 self.rodando = False
 
             if self.policia.x == self.ladrao.x and self.policia.y == self.ladrao.y and not self.vencedor:
                 self.vencedor = 'Rei'
+                reiganhou.play()
                 self.mensagem_vitoria = "Oh não! O Rei Gelado capturou a Princesa Jujuba!"
                 self.rodando = False
 
