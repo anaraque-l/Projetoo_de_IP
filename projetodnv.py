@@ -253,7 +253,7 @@ IMAGENS = {
 
     # Outras imagens
     'gunter': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gunter5.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'desacelera_policia': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'desacelera_policia.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'litch': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'Litch.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'mentinha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
@@ -349,7 +349,7 @@ class Jogador:
         if tipo_objeto == 'gunter':
             self.velocidade = VELOCIDADE_ACELERADA
             self.efeito_ate = agora + DURACAO_EFEITO
-        elif tipo_objeto == 'desacelera_policia':
+        elif tipo_objeto == 'litch':
             self.velocidade = VELOCIDADE_DESACELERADA
             self.efeito_ate = agora + DURACAO_EFEITO
         elif tipo_objeto == 'mentinha' and self.tipo == 'princesa': #policial fica congelado
@@ -361,7 +361,7 @@ class Jogador:
             self.velocidade = VELOCIDADE_PADRAO
 
 class ObjetoJogo:
-    TIPOS = ['gunter', 'desacelera_policia', 'mentinha', 'gema'] #"acelera ladrao" é o objeto que congela o policial
+    TIPOS = ['gunter', 'litch', 'mentinha', 'gema'] #"acelera ladrao" é o objeto que congela o policial
 
     def __init__(self, x, y, tipo, criado_em):
         self.x = x
@@ -418,7 +418,7 @@ class Jogo:
         fila = []
         fila += ['gema'] * 7
         fila += ['gunter'] * 2
-        fila += ['desacelera_policia'] * 2
+        fila += ['litch'] * 2
         fila += ['mentinha'] * 2
         random.shuffle(fila)
         self.fila_objetos = fila
@@ -512,7 +512,7 @@ class Jogo:
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
                     
-                    elif obj.tipo == 'desacelera_policia':# DESACELERA POLICIA PROS DOIS
+                    elif obj.tipo == 'litch':# DESACELERA POLICIA PROS DOIS
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
