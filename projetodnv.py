@@ -82,8 +82,21 @@ IMAGENS = {
     'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
+    'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'coluna': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'linha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'coluna_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'coluna_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'intersecao': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_intersecao.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'linha_baixo': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha_baixo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'linha_cima': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha_cima.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'cima_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'cima_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'baixo_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
+
+    
 }
+
 
 
 VELOCIDADE_PADRAO = 150
