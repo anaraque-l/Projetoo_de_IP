@@ -27,7 +27,9 @@ As imagens e demais recursos visuais foram organizados em diretórios específic
 ---
 
 ## Capturas de Tela
-
+![Menu do Jogo](tela_inicial.pnj)
+![Labirinto](labirinto.pnj)
+![Tela Final](tela_final.pnj)
 
 ## Ferramentas e Justificativas
 
