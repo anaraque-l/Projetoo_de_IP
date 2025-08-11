@@ -3,6 +3,7 @@ import pygame
 import random
 import os
 from collections import Counter
+os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
 pygame.mixer.init()
 
@@ -659,7 +660,7 @@ class Jogo:
             minutos = tempo_restante_ms // 60000
             segundos = (tempo_restante_ms % 60000) // 1000
             tempo_formatado = f"{minutos}:{segundos:02d}"
-            self.desenhar_texto(f"{tempo_formatado}", 930, 10)
+            self.desenhar_texto(f"{tempo_formatado}", 930, 25)
 
             cont_ladrao = Counter(self.ladrao.coletados)
             cont_policia = Counter(self.policia.coletados)
