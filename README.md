@@ -21,17 +21,17 @@ Com uma ambientação inspirada na temática do desenho “Hora de Aventura”, 
 
 ```
 Royal_Rush/
-├── assets/                # Recursos do jogo
-│   ├── graphics/           # Imagens dos sprites e do mapa
-│   └── levels/             # Arquivos de nível
-├── src/                    # Código-fonte do jogo
+├── assets/                  # Recursos do jogo
+│   ├── graphics/            # Imagens dos sprites e do mapa
+│   └── levels/              # Arquivos de nível
+├── src/                     # Código-fonte do jogo
 │   ├── config/              # Arquivos de configuração
 │   ├── core/                # Lógica central do jogo
 │   ├── entities/            # Entidades e personagens do jogo
-│   │   ├── bullet/           # Representação das balas
-│   │   ├── character/        # Representação dos personagens (Inimigos e o jogador)
-│   │   ├── collectable/      # Representação dos coletáveis
-│   │   └── world/            # Representação do mundo e seus elementos
+│   │   ├── bullet/          # Representação das balas
+│   │   ├── character/       # Representação dos personagens (Inimigos e o jogador)
+│   │   ├── collectable/     # Representação dos coletáveis
+│   │   └── world/           # Representação do mundo e seus elementos
 │   ├── off_game_screens/    # Telas de menu, game over, etc.
 │   ├── __init__.py          # Módulo de inicialização
 │   └── entities_enum.py     # Enumeração de entidades
