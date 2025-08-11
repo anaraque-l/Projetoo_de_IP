@@ -1,5 +1,4 @@
-# Polícia e Ladrão: Aventura no Labirinto de *Hora de Aventura*
-
+# Royal Rush 
 ## Integrantes da Equipe
 
 - Ana Raquel Rodrigues  
