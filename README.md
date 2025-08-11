@@ -27,9 +27,11 @@ As imagens e demais recursos visuais foram organizados em diretórios específic
 ---
 
 ## Capturas de Tela
-![Menu do Jogo](assets/tela_inicial.pnj)
-![Labirinto](assets/labirinto.pnj)
-![Tela Final](assets/tela_final.pnj)
+![tela_inicial](https://github.com/user-attachments/assets/bd60c9c8-efaf-4408-9fcf-93fa1cebacb2)
+![como_jogar](https://github.com/user-attachments/assets/9e14ce56-a47a-4700-be87-395a2cfc7641)
+![historia](https://github.com/user-attachments/assets/c7b09f4e-437a-4d28-80a0-ffc533265a2f)
+![labirinto](https://github.com/user-attachments/assets/5c02a31b-508d-4ff7-8281-bc9ba7592f9d)
+![mensagem_final](https://github.com/user-attachments/assets/5ef3a3e0-7322-4e37-b7e0-eae0a5a3adda)
 
 ## Ferramentas e Justificativas
 
