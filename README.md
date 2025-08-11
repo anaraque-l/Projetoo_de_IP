@@ -9,36 +9,44 @@
 - Luciano Paixão  
 - Marcos Silva  
  
-
 ---
 
 ## Arquitetura do Projeto
 
 O projeto foi desenvolvido em Python, utilizando a biblioteca Pygame. A estrutura do código foi organizada em três classes principais:
 
-- **`Jogador`**: Responsável por representar os personagens controlados (Princesa Jujuba e Rei Gelado), com atributos como posição, velocidade e imagem.
-- **`ObjetoJogo`**: Gerencia os itens coletáveis no mapa, incluindo sua geração aleatória, exibição e efeitos.
-- **`Jogo`**: Controla o loop principal do jogo, renderiza a tela, verifica colisões e condições de vitória/derrota.
-
+- **`Jogador`**: Responsável por representar os personagens controlados (Princesa Jujuba e Rei Gelado), com atributos como posição, velocidade, estado atual e imagem associada. Essa classe também gerencia a movimentação e as interações básicas dos personagens dentro do labirinto.
+- **`ObjetoJogo`**: Gerencia os itens coletáveis distribuídos no mapa, incluindo a lógica para sua geração aleatória, renderização na tela e efeitos temporários que modificam a jogabilidade quando coletados pelos jogadores.
+- **`Jogo`**: Controla o loop principal do jogo, responsável por atualizar a tela, processar eventos de entrada (como teclas pressionadas), verificar colisões entre jogadores e objetos, aplicar regras de vitória e derrota, e administrar o fluxo geral da aplicação.
 Variáveis principais foram definidas no início do código, como largura e altura da tela, caminhos das imagens, velocidades dos personagens e estrutura do labirinto.
-
-As imagens e demais recursos visuais foram organizados em diretórios específicos, facilitando a manutenção do projeto.
 
 ---
 
 ## Capturas de Tela
-![tela_inicial](https://github.com/user-attachments/assets/bd60c9c8-efaf-4408-9fcf-93fa1cebacb2)
-![como_jogar](https://github.com/user-attachments/assets/9e14ce56-a47a-4700-be87-395a2cfc7641)
-![historia](https://github.com/user-attachments/assets/c7b09f4e-437a-4d28-80a0-ffc533265a2f)
-![labirinto](https://github.com/user-attachments/assets/5c02a31b-508d-4ff7-8281-bc9ba7592f9d)
-![mensagem_final](https://github.com/user-attachments/assets/5ef3a3e0-7322-4e37-b7e0-eae0a5a3adda)
+### Tela Inicial:
+<img width="712" height="570" alt="image" src="https://github.com/user-attachments/assets/235986c7-be9d-42d7-ae68-b211683a309c" />
+
+
+### História:
+<img width="1600" height="900" alt="image" src="https://github.com/user-attachments/assets/c5c4d0ba-9c85-46b7-aa59-60c78555f035" />
+
+
+### Como Jogar:
+<img width="687" height="591" alt="image" src="https://github.com/user-attachments/assets/35247b3f-45d7-4329-a925-31541204a846" />
+
+
+### Labirinto:
+<img width="1179" height="544" alt="image" src="https://github.com/user-attachments/assets/271fac9d-f4d6-4ce7-8074-c34af3b0de18" />
+
 
 ## Ferramentas e Justificativas
 
 - **Python**: Linguagem utilizada na disciplina, de fácil leitura e adequada para jogos simples.
 - **Pygame**: Biblioteca que permite a criação de jogos 2D com recursos gráficos, sons e controle de eventos de teclado.
-- **Git & GitHub**: Controle de versão e colaboração eficiente entre os membros do grupo.
-- **GitHub Desktop**: Interface gráfica que facilitou a sincronização entre as branches e evitou conflitos de código.
+- **GitHub**: Controle de versão e colaboração eficiente entre os membros do grupo.
+- **sys**: Utilizada para encerrar o programa imediatamente após o usuário fechar a janela.
+- **random**: Utilizada para gerar elementos ou eventos aleatórios no jogo.
+- **os**: Utilizada para manipulação de caminhos e importação de arquivos (imagens, sons).
 
 ---
 
@@ -53,18 +61,17 @@ As imagens e demais recursos visuais foram organizados em diretórios específic
 | Marcos Silva           | Elaboração da documentação e README.md                                           |
 | Luciano Paixão         | Preparação da apresentação final do projeto                                      |
 
-l
 ---
 
 ## Conceitos Utilizados na Disciplina
 
-- **Condicionais (`if`, `else`)**: Verificação de colisões e condições de vitória.
-- **Laços de repetição (`while`, `for`)**: Loop principal do jogo e movimentação de personagens.
-- **Listas**: Representação do labirinto e objetos do jogo.
-- **Funções**: Reutilização de código para carregamento de imagens e verificação de estado.
+- **Estruturas condicionais**: Utilizadas para controlar a movimentação dos personagens e verificar eventos no jogo.
+- **Estruturas de repetição**: Utilizadas no loop principal para manter o jogo em execução e verificar constantemente as condições de término.
+- **Listas**: Utilizadas para criar e manipular o labirinto do jogo, facilitando a visualização e definição de obstáculo e para verificar efeitos dos coletáveis, gerar posições aleatórias e verificar a presença de objetos em determinadas posições.
+- **Funções**: Criadas para verificar efeitos dos coletáveis, gerar posições aleatórias e verificar a presença de objetos em determinadas posições.
 - **Tuplas**: Definição de constantes, como cores.
 - **Dicionários**: Mapeamento de imagens e efeitos.
-- **Programação orientada a objetos**: Criação de classes `Jogador`, `ObjetoJogo` e `Jogo` para modularização do projeto.
+- **Programação orientada a objetos**: Aplicada na criação das classes principais, como Jogador, ObjetoJogo e Jogo.
 
 ---
 
