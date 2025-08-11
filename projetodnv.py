@@ -229,6 +229,7 @@ somdogunter=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'gunter.mp3'))
 reiganhou=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'reiganhou.mp3'))
 princesaganhou=pygame.mixer.Sound(os.path.join(CAMINHO_IMAGENS, 'princesa ganhou.mp3'))
 
+#fundo 
 FUNDO = pygame.transform.scale(
     pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'fundo.jpg')),
     (LARGURA_TELA, ALTURA_TELA)
@@ -523,6 +524,7 @@ class Jogo:
                         self.objetos.remove(obj)
 
     def mostrar_tela_vitoria(self):
+        self.fontezinha=pygame.font.SysFont('impact',50)
         duracao_exibicao = 3000  
         inicio_vitoria = pygame.time.get_ticks()
         while pygame.time.get_ticks() - inicio_vitoria < duracao_exibicao:
@@ -531,8 +533,8 @@ class Jogo:
                     pygame.quit()
                     exit()
 
-            TELA.fill(PRETO)
-            texto_img = self.fonte.render(self.mensagem_vitoria, True, BRANCO)
+            FUNDO
+            texto_img = self.fontezinha.render(self.mensagem_vitoria, True, PRETO)
             ret_texto = texto_img.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2))
             TELA.blit(texto_img, ret_texto)
             pygame.display.flip()
