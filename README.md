@@ -17,6 +17,30 @@ No jogo, o Rei Gelado assume o papel do policial que tenta capturar a Princesa J
 
 Com uma ambientação inspirada na temática do desenho “Hora de Aventura”, o jogo proporciona uma experiência interativa, unindo elementos de estratégia, rapidez e cooperação na mesma tela.
 
+## Estrutura do Projeto
+
+```
+Royal_Rush/
+├── assets/                # Recursos do jogo
+│   ├── graphics/           # Imagens dos sprites e do mapa
+│   └── levels/             # Arquivos de nível
+├── src/                    # Código-fonte do jogo
+│   ├── config/              # Arquivos de configuração
+│   ├── core/                # Lógica central do jogo
+│   ├── entities/            # Entidades e personagens do jogo
+│   │   ├── bullet/           # Representação das balas
+│   │   ├── character/        # Representação dos personagens (Inimigos e o jogador)
+│   │   ├── collectable/      # Representação dos coletáveis
+│   │   └── world/            # Representação do mundo e seus elementos
+│   ├── off_game_screens/    # Telas de menu, game over, etc.
+│   ├── __init__.py          # Módulo de inicialização
+│   └── entities_enum.py     # Enumeração de entidades
+├── .gitignore               # Arquivos e diretórios ignorados pelo Git
+├── README.md                # Relatório/documentação do projeto
+├── main.py                  # Arquivo principal que inicia o jogo
+└── requirements.txt         # Dependências do projeto
+```
+
 
 ---
 
