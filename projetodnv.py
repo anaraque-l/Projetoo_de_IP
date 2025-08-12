@@ -266,7 +266,9 @@ IMAGENS = {
     'cima_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'cima_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'baixo_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA))
+    'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'vitoria_princesa_gemas': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriaprincesa.jpg')), (LARGURA_TELA, ALTURA_TELA)),
+    'vitoria_princesa_tempo': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriaprincesa.jpg')), (LARGURA_TELA, ALTURA_TELA)),
+    'vitoria_rei_gelado': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriarei.jpg')), (LARGURA_TELA, ALTURA_TELA))
 
     
 }
@@ -490,50 +492,71 @@ class Jogo:
 
     def verificar_coletas(self, agora):
         for jogador in [self.ladrao, self.policia]:
-            for obj in self.objetos[:]:  # faz uma cópia da lista para evitar problemas ao remover
+            for obj in self.objetos[:]:
                 if jogador.x == obj.x and jogador.y == obj.y:
                     if obj.tipo == 'gema' and jogador.tipo == 'princesa':
                         somdecoleta.play()
                         jogador.coletados.append(obj.tipo)
-                        self.objetos.remove(obj)  # Remove o objeto coletado!
-                        if jogador.coletados.count('gema') >= 5:
-                            self.vencedor = 'Ladrão'
-                            princesaganhou.play()
-                            self.mensagem_vitoria = "A princesa conseguiu coletar as 5 gemas!"
-                            self.rodando = False
+                        self.objetos.remove(obj)
                     elif obj.tipo == 'gema' and jogador.tipo == 'rei':
-                         self.objetos.remove(obj) #se o policial toca e n remove sem coleta
-
-                    elif obj.tipo == 'gunter': #ACELERA POLICIA EH PRA ACELERAR OS DOIS
+                        self.objetos.remove(obj)
+                    elif obj.tipo == 'gunter':
                         somdogunter.play()
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
-                    
-                    elif obj.tipo == 'litch':# DESACELERA POLICIA PROS DOIS
+                    elif obj.tipo == 'litch':
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
-                    
-
                     elif obj.tipo == 'mentinha' and jogador.tipo == 'princesa':
                         jogador.coletados.append(obj.tipo)
                         jogador.aplicar_efeito(obj.tipo, agora, jogo=self)
                         self.objetos.remove(obj)
-                    
-                    elif obj.tipo == 'mentinha' and jogador.tipo == 'rei': #apenas remove
+                    elif obj.tipo == 'mentinha' and jogador.tipo == 'rei':
                         self.objetos.remove(obj)
 
-    def mostrar_tela_vitoria(self):
-        self.fontezinha=pygame.font.SysFont('impact',50)
-        duracao_exibicao = 3000  
-        inicio_vitoria = pygame.time.get_ticks()
-        while pygame.time.get_ticks() - inicio_vitoria < duracao_exibicao:
-            for evento in pygame.event.get():
-                if evento.type == pygame.QUIT:
-                    pygame.quit()
-                    exit()
+    def mostrar_tela_vitoria(self, imagem_vitoria):
+            self.fontezinha = pygame.font.SysFont('impact', 50)
+            duracao_exibicao = 30000  # vai mudando pra quantos segundos quiser que deixe 
+            inicio_vitoria = pygame.time.get_ticks()
+            
+            imagem = IMAGENS[imagem_vitoria]
+            
+            botao_voltar = pygame.Rect(LARGURA_TELA - 110, 20, 90, 40)
+            
+            while pygame.time.get_ticks() - inicio_vitoria < duracao_exibicao:
+                pos_mouse = pygame.mouse.get_pos()
+                for evento in pygame.event.get():
+                    if evento.type == pygame.QUIT:
+                        pygame.quit()
+                        sys.exit()
+                    elif evento.type == pygame.MOUSEBUTTONDOWN:
+                        if botao_voltar.collidepoint(pos_mouse):
+                            return "voltar"
+                
+               
+                TELA.blit(imagem, (0, 0))
+                
+                # pra exibir a mensagem/ se quiser usar so tirar de comentario 
+                #texto_img = self.fontezinha.render(self.mensagem_vitoria, True, PRETO)
+                #ret_texto = texto_img.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2))
+                #TELA.blit(texto_img, ret_texto)
 
+                # botão menu
+                cor_botao = (200, 200, 200)
+                cor_botao_hover = (150, 150, 150)
+                cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
+                pygame.draw.rect(TELA, cor_atual, botao_voltar, border_radius=8)
+                
+                texto_botao = self.fonte.render("Menu", True, (0, 0, 0))
+                TELA.blit(texto_botao, texto_botao.get_rect(center=botao_voltar.center))
+
+                pygame.display.flip()
+                self.clock.tick(self.fps)
+
+       
+            return "continuar"
             FUNDO
             texto_img = self.fontezinha.render(self.mensagem_vitoria, True, PRETO)
             ret_texto = texto_img.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2))
@@ -610,7 +633,7 @@ class Jogo:
         while self.rodando:
             agora = pygame.time.get_ticks()
 
-            # --- Captura eventos ---
+            # --- Captura de eventos ---
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     pygame.quit()
@@ -619,7 +642,7 @@ class Jogo:
                 elif evento.type == pygame.MOUSEBUTTONDOWN:
                     if hasattr(self, 'botao_voltar') and self.botao_voltar.collidepoint(pygame.mouse.get_pos()):
                         self.rodando = False
-                        tela_inicial()  # volta para o menu
+                        tela_inicial()
                         return
 
             # --- Lógica do jogo ---
@@ -637,38 +660,54 @@ class Jogo:
             tempo_passado = agora - self.tempo_inicio
             tempo_restante_ms = max(0, self.TEMPO_PARTIDA - tempo_passado)
 
-            if tempo_restante_ms == 0 and not self.vencedor:
-                self.vencedor = 'Princesa'
-                pygame.mixer.music.stop()
-                princesaganhou.play()
-                self.mensagem_vitoria = "O Rei Gelado não conseguiu capturar a Princesa a tempo!"
-                self.rodando = False
+         
+            if not self.vencedor:
+                # Condição de vitória por gemas
+                if self.ladrao.coletados.count('gema') >= 5:
+                    self.vencedor = 'Princesa'
+                    pygame.mixer.music.stop()
+                    princesaganhou.play()
+                    self.mensagem_vitoria = "A princesa conseguiu coletar as 5 gemas!"
+                    self.rodando = False
+                    self.imagem_vitoria_atual = 'vitoria_princesa_gemas'
 
-            if self.policia.x == self.ladrao.x and self.policia.y == self.ladrao.y and not self.vencedor:
-                self.vencedor = 'Rei'
-                pygame.mixer.music.stop()
-                reiganhou.play()
-                self.mensagem_vitoria = "Oh não! O Rei Gelado capturou a Princesa Jujuba!"
-                self.rodando = False
+                # Condição de vitória por captura
+                elif self.policia.x == self.ladrao.x and self.policia.y == self.ladrao.y:
+                    self.vencedor = 'Rei'
+                    pygame.mixer.music.stop()
+                    reiganhou.play()
+                    self.mensagem_vitoria = "Oh não! O Rei Gelado capturou a Princesa Jujuba!"
+                    self.rodando = False
+                    self.imagem_vitoria_atual = 'vitoria_rei_gelado'
 
-            # --- Desenho ---
+                # Condição de vitória por tempo
+                elif tempo_restante_ms == 0:
+                    self.vencedor = 'Princesa'
+                    pygame.mixer.music.stop()
+                    princesaganhou.play()
+                    self.mensagem_vitoria = "O Rei Gelado não conseguiu capturar a Princesa a tempo!"
+                    self.rodando = False
+                    self.imagem_vitoria_atual = 'vitoria_princesa_tempo'
+            
+            
             self.desenhar_labirinto()
             self.desenhar_objetos()
             self.ladrao.desenhar()
             self.policia.desenhar()
 
+            # Exibe o tempo restante
             minutos = tempo_restante_ms // 60000
             segundos = (tempo_restante_ms % 60000) // 1000
             tempo_formatado = f"{minutos}:{segundos:02d}"
             self.desenhar_texto(f"{tempo_formatado}", 930, 25)
 
+            # Exibe o placar
             cont_ladrao = Counter(self.ladrao.coletados)
             cont_policia = Counter(self.policia.coletados)
             texto_ladrao = f"Princesa Jujuba: {formatar_itens(cont_ladrao)}"
             texto_policia = f"Rei Gelado: {formatar_itens(cont_policia)}"
 
             COR_TEXTO_VERDE = (0, 100, 0)
-
             self.desenhar_texto(texto_ladrao, 10, 65, cor=COR_TEXTO_VERDE)
             self.desenhar_texto(texto_policia, 10, 90, cor=COR_TEXTO_VERDE)
 
@@ -678,11 +717,13 @@ class Jogo:
             pygame.display.flip()
             self.clock.tick(self.fps)
 
-        # Quando o loop termina por vitória ou captura, mostra tela final
+        # Após o loop, se houver um vencedor, exibe a tela de vitória
         if self.vencedor:
             print(f"{self.vencedor} venceu!")
-            self.mostrar_tela_vitoria()
-
+            resultado = self.mostrar_tela_vitoria(self.imagem_vitoria_atual)
+            if resultado == "voltar":
+                tela_inicial()
+                return
 
 jogo = Jogo()
 jogo.loop_principal()
