@@ -177,19 +177,7 @@ VERMELHO = (255, 0, 0)
 PRETO = (0, 0, 0)
 COR_CAMINHO = (0, 100, 0)
 
-MAPEAMENTO_PAREDES = {
-    'C': 'coluna',
-    'L': 'linha',
-    'D': 'coluna_direita',
-    'E': 'coluna_esquerda',
-    'I': 'intersecao',
-    'B': 'linha_baixo',
-    'U': 'linha_cima',
-    'W': 'cima_esquerda',
-    'X': 'cima_direita',
-    'Y': 'baixo_esquerda',
-    'Z': 'baixo_direita'
-}
+
 
 LABIRINTO_STR = [
     "ZLLLLLBLLLLLLLBLLLLLLLBLLLLLLLLLY",
@@ -255,7 +243,7 @@ IMAGENS = {
     'mentinha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'mentol.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'gema': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'gema22.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'arvore': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'abustoo.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'arbusto': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arbusto.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'arvore_rosa': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'arvore_rosa.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'coluna': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'linha': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_linha.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'coluna_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_coluna_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
@@ -269,7 +257,6 @@ IMAGENS = {
     'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'vitoria_princesa_gemas': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriaprincesa.jpg')), (LARGURA_TELA, ALTURA_TELA)),
     'vitoria_princesa_tempo': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriaprincesa.jpg')), (LARGURA_TELA, ALTURA_TELA)),
     'vitoria_rei_gelado': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriarei.jpg')), (LARGURA_TELA, ALTURA_TELA))
-
     
 }
 
@@ -453,33 +440,18 @@ class Jogo:
 
     def desenhar_labirinto(self):
         TELA.blit(FUNDO, (0, 0))
-        COR_LABIRINTO = (0, 100, 0)
-        espessura_linha = 2
+
+        # A imagem do arbusto já foi carregada em IMAGENS['arbusto']
+        imagem_arbusto = IMAGENS['arbusto']
 
         for y, linha in enumerate(self.labirinto):
             for x, celula in enumerate(linha):
                 if celula == '#':
-                    # Verifica se tem decoração
-                    decorado = False
-                    for tipo in ['coluna', 'linha', 'coluna_direita', 'coluna_esquerda', 'intersecao', 'linha_baixo', 'linha_cima', 'cima_esquerda', 'cima_direita', 'baixo_esquerda', 'baixo_direita']:
-                        if (x, y, tipo) in self.decoracoes:
-                            imagem = IMAGENS.get(tipo)
-                            if imagem:
-                                TELA.blit(imagem, (x * TAMANHO_CELULA + OFFSET_X, y * TAMANHO_CELULA + OFFSET_Y))
-                            decorado = True
-                            break
-
-                    if not decorado:
-                        
-                        esquerda = x * TAMANHO_CELULA + OFFSET_X
-                        topo = y * TAMANHO_CELULA + OFFSET_Y
-                        direita = esquerda + TAMANHO_CELULA
-                        baixo = topo + TAMANHO_CELULA
-
-                        pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, topo), (direita, topo), espessura_linha)
-                        pygame.draw.line(TELA, COR_LABIRINTO, (direita, topo), (direita, baixo), espessura_linha)
-                        pygame.draw.line(TELA, COR_LABIRINTO, (direita, baixo), (esquerda, baixo), espessura_linha)
-                        pygame.draw.line(TELA, COR_LABIRINTO, (esquerda, baixo), (esquerda, topo), espessura_linha)
+                    # Desenha a imagem do arbusto em cada posição de parede
+                    TELA.blit(imagem_arbusto, (x * TAMANHO_CELULA + OFFSET_X, y * TAMANHO_CELULA + OFFSET_Y))
+                elif celula == ' ':
+                    # opcional: desenhe um fundo de caminho aqui se quiser
+                    pass
 
 
     def desenhar_objetos(self):
@@ -565,18 +537,13 @@ class Jogo:
             self.clock.tick(self.fps)
 
     def gerar_cenario(self):
-        self.decoracoes = []  # Limpa as decorações de antes
-
+    # Esta função agora apenas converte os caracteres de parede para '#'
         linhas = len(self.labirinto)
         colunas = len(self.labirinto[0])
 
         for y in range(linhas):
             for x in range(colunas):
-                if self.labirinto[y][x] in MAPEAMENTO_PAREDES:
-                    celula = self.labirinto[y][x]
-
-                    tipo_imagem = MAPEAMENTO_PAREDES[celula]
-                    self.decoracoes.append((x, y, tipo_imagem))
+                if self.labirinto[y][x] != ' ':
                     self.labirinto[y][x] = '#'
 
 
