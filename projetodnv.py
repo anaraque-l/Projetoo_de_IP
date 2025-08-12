@@ -266,9 +266,10 @@ IMAGENS = {
     'cima_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'cima_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_cima_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
     'baixo_esquerda': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_esquerda.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
-    'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),'vitoria_princesa_gemas': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriaprincesa.jpg')), (LARGURA_TELA, ALTURA_TELA)),
-    'vitoria_princesa_tempo': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriaprincesa.jpg')), (LARGURA_TELA, ALTURA_TELA)),
-    'vitoria_rei_gelado': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriarei.jpg')), (LARGURA_TELA, ALTURA_TELA))
+    'baixo_direita': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'labirinto_baixo_direita.png')), (TAMANHO_CELULA, TAMANHO_CELULA)),
+    'vitoria_princesa_gemas': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriagemas.png')), (LARGURA_TELA, ALTURA_TELA)),
+    'vitoria_princesa_tempo': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriatempo.png')), (LARGURA_TELA, ALTURA_TELA)),
+    'vitoria_rei_gelado': pygame.transform.scale(pygame.image.load(os.path.join(CAMINHO_IMAGENS, 'vitoriarei.png')), (LARGURA_TELA, ALTURA_TELA))
 
     
 }
