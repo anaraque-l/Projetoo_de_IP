@@ -681,7 +681,5 @@ class Jogo:
         if self.vencedor:
             print(f"{self.vencedor} venceu!")
             self.mostrar_tela_vitoria()
-
-
 jogo = Jogo()
 jogo.loop_principal()
