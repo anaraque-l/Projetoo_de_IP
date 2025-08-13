@@ -519,7 +519,7 @@ class Jogo:
 
     def mostrar_tela_vitoria(self, imagem_vitoria):
             self.fontezinha = pygame.font.SysFont('impact', 50)
-            duracao_exibicao = 30000  # vai mudando pra quantos segundos quiser que deixe 
+            duracao_exibicao = 3000  # vai mudando pra quantos segundos quiser que deixe 
             inicio_vitoria = pygame.time.get_ticks()
             
             imagem = IMAGENS[imagem_vitoria]
