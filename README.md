@@ -85,14 +85,15 @@ Variáveis principais foram definidas no início do código, como largura e altu
 
 ## Divisão de Trabalho
 
-| Integrante             | Atividades Desenvolvidas                                                         |
-|------------------------|----------------------------------------------------------------------------------|
-| Jaiane Evilásio        | Estruturação da lógica base do jogo                                             |
-| Lavinya Souza          | Ambientação e adaptação visual temática                                          |
-| Clarissa Honório       | Implementação gráfica do labirinto                                              |
-| Ana Raquel Rodrigues   | Inserção de imagens e adaptação visual                                           |
-| Marcos Silva           | Elaboração da documentação e README.md                                           |
-| Luciano Paixão         | Preparação da apresentação final do projeto                                      |
+- Inicialmente, Jaiane Evilásio elaborou a base lógica do código, e, a partir dela, todo o grupo contribuiu para o aprimoramento, adicionando recursos como o temporizador, a lógica de exibição dos coletáveis e outras funcionalidades.
+
+- Após consolidarmos essa base, realizamos uma reunião para definir a temática do jogo e, juntos, escolhemos criar um “Polícia e Ladrão” inspirado no universo de “Hora de Aventura”, em que o Rei Gelado tenta capturar a Princesa Jujuba, enquanto ela foge do temível vilão.
+
+- Na etapa visual, Lavinya Souza, Clarissa Honório e Ana Raquel Rodrigues lideraram a criação das imagens temáticas, mas todos colaboraram com ideias e ajustes até a implementação final no código.
+
+- Por fim, Marcos Silva e Luciano Paixão ficaram responsáveis pela documentação (README.md, apresentação de slides e preenchimento dos acompanhamentos), com apoio e revisão de todo o grupo.
+
+- Assim, apesar da divisão inicial de tarefas, todo o desenvolvimento lógica, programação, arte e documentação foi fruto de um trabalho conjunto e colaborativo.
 
 ---
 
