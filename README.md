@@ -13,7 +13,7 @@
 ## Descrição Geral do Projeto
 O projeto “Royal Rush” é um jogo 2D desenvolvido em Python utilizando a biblioteca Pygame, criado para a disciplina de Introdução à Programação do curso de Sistemas de Informação do Centro de Informática da UFPE (CIn-UFPE).
 
-No jogo, o Rei Gelado assume o papel do policial que tenta capturar a Princesa Jujuba, a ladra, que busca escapar pelo labirinto da Floresta Doce enquanto coleta itens para ajudá-la na fuga. O jogo permite que dois jogadores joguem simultaneamente no mesmo dispositivo, cada um controlando um dos personagens com objetivos opostos.
+No jogo, o Rei Gelado tenta capturar a Princesa Jujuba, que busca escapar pelo labirinto da Floresta Doce enquanto coleta itens para ajudá-la na fuga. O jogo permite que dois jogadores joguem simultaneamente no mesmo dispositivo, cada um controlando um dos personagens com objetivos opostos.
 
 Com uma ambientação inspirada na temática do desenho “Hora de Aventura”, o jogo proporciona uma experiência interativa, unindo elementos de estratégia, rapidez e cooperação na mesma tela.
 
