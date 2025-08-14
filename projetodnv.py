@@ -545,12 +545,12 @@ class Jogo:
                 #TELA.blit(texto_img, ret_texto)
 
                 # botão menu
-                cor_botao = (200, 200, 200)
-                cor_botao_hover = (150, 150, 150)
+                cor_botao = (255, 182, 193)       # Rosa claro
+                cor_botao_hover = (255, 105, 180) # Rosa forte
                 cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
                 pygame.draw.rect(TELA, cor_atual, botao_voltar, border_radius=8)
                 
-                texto_botao = self.fonte.render("Menu", True, (0, 0, 0))
+                texto_botao = self.fonte.render("Menu", True, (255, 255, 255))
                 TELA.blit(texto_botao, texto_botao.get_rect(center=botao_voltar.center))
 
                 pygame.display.flip()
@@ -640,11 +640,7 @@ class Jogo:
                     pygame.quit()
                     sys.exit()
 
-                elif evento.type == pygame.MOUSEBUTTONDOWN:
-                    if hasattr(self, 'botao_voltar') and self.botao_voltar.collidepoint(pygame.mouse.get_pos()):
-                        self.rodando = False
-                        tela_inicial()
-                        return
+                
 
             # --- Lógica do jogo ---
             teclas = pygame.key.get_pressed()
@@ -712,8 +708,7 @@ class Jogo:
             self.desenhar_texto(texto_ladrao, 10, 65, cor=COR_TEXTO_VERDE)
             self.desenhar_texto(texto_policia, 10, 90, cor=COR_TEXTO_VERDE)
 
-            # Botão Voltar
-            self.desenhar_botao_voltar()
+            
 
             pygame.display.flip()
             self.clock.tick(self.fps)
