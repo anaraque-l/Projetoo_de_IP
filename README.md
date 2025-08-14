@@ -93,7 +93,7 @@ Variáveis principais foram definidas no início do código, como largura e altu
 
 - Por fim, Marcos Silva e Luciano Paixão ficaram responsáveis pela documentação (README.md, apresentação de slides e preenchimento dos acompanhamentos), com apoio e revisão de todo o grupo.
 
-- Assim, apesar da divisão inicial de tarefas, todo o desenvolvimento lógica, programação, arte e documentação foi fruto de um trabalho conjunto e colaborativo.
+- Assim, apesar da divisão inicial de tarefas, todo o desenvolvimento da lógica, programação, arte e documentação foi fruto de um trabalho conjunto e colaborativo.
 
 ---
 
