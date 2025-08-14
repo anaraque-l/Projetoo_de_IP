@@ -518,52 +518,26 @@ class Jogo:
                         self.objetos.remove(obj)
 
     def mostrar_tela_vitoria(self, imagem_vitoria):
-            self.fontezinha = pygame.font.SysFont('impact', 50)
-            duracao_exibicao = 3000  # vai mudando pra quantos segundos quiser que deixe 
-            inicio_vitoria = pygame.time.get_ticks()
-            
-            imagem = IMAGENS[imagem_vitoria]
-            
-            botao_voltar = pygame.Rect(LARGURA_TELA - 110, 20, 90, 40)
-            
-            while pygame.time.get_ticks() - inicio_vitoria < duracao_exibicao:
-                pos_mouse = pygame.mouse.get_pos()
-                for evento in pygame.event.get():
-                    if evento.type == pygame.QUIT:
-                        pygame.quit()
-                        sys.exit()
-                    elif evento.type == pygame.MOUSEBUTTONDOWN:
-                        if botao_voltar.collidepoint(pos_mouse):
-                            return "voltar"
-                
-               
-                TELA.blit(imagem, (0, 0))
-                
-                # pra exibir a mensagem/ se quiser usar so tirar de comentario 
-                #texto_img = self.fontezinha.render(self.mensagem_vitoria, True, PRETO)
-                #ret_texto = texto_img.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2))
-                #TELA.blit(texto_img, ret_texto)
+        self.fontezinha = pygame.font.SysFont('impact', 50)
+        duracao_exibicao = 3000  # tempo em milissegundos (3s)
+        inicio_vitoria = pygame.time.get_ticks()
+        
+        imagem = IMAGENS[imagem_vitoria]
+        
+        while pygame.time.get_ticks() - inicio_vitoria < duracao_exibicao:
+            for evento in pygame.event.get():
+                if evento.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-                # botão menu
-                cor_botao = (255, 182, 193)       # Rosa claro
-                cor_botao_hover = (255, 105, 180) # Rosa forte
-                cor_atual = cor_botao_hover if botao_voltar.collidepoint(pos_mouse) else cor_botao
-                pygame.draw.rect(TELA, cor_atual, botao_voltar, border_radius=8)
-                
-                texto_botao = self.fonte.render("Menu", True, (255, 255, 255))
-                TELA.blit(texto_botao, texto_botao.get_rect(center=botao_voltar.center))
-
-                pygame.display.flip()
-                self.clock.tick(self.fps)
-
-       
-            return "continuar"
-            FUNDO
-            texto_img = self.fontezinha.render(self.mensagem_vitoria, True, PRETO)
-            ret_texto = texto_img.get_rect(center=(LARGURA_TELA // 2, ALTURA_TELA // 2))
-            TELA.blit(texto_img, ret_texto)
+            # Desenha somente a imagem de vitória
+            TELA.blit(imagem, (0, 0))
+            
             pygame.display.flip()
             self.clock.tick(self.fps)
+
+        return "continuar"
+
 
     def gerar_cenario(self):
         self.decoracoes = []  # Limpa as decorações de antes
@@ -713,13 +687,10 @@ class Jogo:
             pygame.display.flip()
             self.clock.tick(self.fps)
 
-        # Após o loop, se houver um vencedor, exibe a tela de vitória
+        #exibe a tela e encerra
         if self.vencedor:
             print(f"{self.vencedor} venceu!")
-            resultado = self.mostrar_tela_vitoria(self.imagem_vitoria_atual)
-            if resultado == "voltar":
-                tela_inicial()
-                return
+            self.mostrar_tela_vitoria(self.imagem_vitoria_atual)
 
 jogo = Jogo()
 jogo.loop_principal()
